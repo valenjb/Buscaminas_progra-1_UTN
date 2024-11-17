@@ -2,8 +2,8 @@ import pygame
 from biblioteca import *
 #-----------------------------  PANTALLA  ------------------------------------------------
 
-PANTALLA_ANCHO = 400
-PANTALLA_ALTO = 400
+PANTALLA_ALTO = 800
+PANTALLA_ANCHO = 600
 RESOLUCION_PANTALLA = (PANTALLA_ANCHO, PANTALLA_ALTO)
 
 
@@ -37,6 +37,11 @@ imagen_cuadrado=pygame.image.load("img/CUADRADO_BUSCAMINA.jpg")
 
 imagen_cuadrado=pygame.transform.scale(imagen_cuadrado,(50,50))
 
+imagen_mina = pygame.image.load("img/mina.png")
+imagen_mina = pygame.transform.scale(imagen_mina, (50, 50))
+
+imagen_bandera = pygame.image.load("img/bandera.png")
+imagen_bandera = pygame.transform.scale(imagen_mina, (50, 50))
 
 #--------------------------- BOTONES  --------------------------------------------------
 

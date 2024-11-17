@@ -52,6 +52,8 @@ def crear_matriz_buscaminas(cant_filas:int, cant_colum:int, minas:int)->list:
             matriz[fila_random][columna_random]=-1
             minas_colocadas+=1
 
+    #FALTA QUE LO PONGA EN EL MEDIO
+
     return matriz
 
 
