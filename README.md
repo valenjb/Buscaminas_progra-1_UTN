@@ -1,7 +1,7 @@
-## Buscaminas_progra-1_UTN
+## Proyecto Buscaminas UTN: 
+### Integrantes del grupo:
 
-# Integrantes:
-
-Valentino Jimeno Bravo
-Agustín Leyes
-Dylan Gonzalez
+🚀 *Integrantes del Equipo = :*
+-Valentino Jimeno Bravo
+-Agustín Leyes
+-Dylan Gonzalez
