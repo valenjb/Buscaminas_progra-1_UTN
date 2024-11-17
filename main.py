@@ -26,13 +26,14 @@ while corriendo == True:
                     mostrar_inicio=False
                 if boton_salir.collidepoint(event.pos):
                     corriendo=False
+                    print("Cerrando juego...")
     else:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 corriendo = False
             if evento.type == pygame.MOUSEBUTTONDOWN:
                 print(evento)
-
+        pantalla.fill(COLOR_TABLERO)
 
         #pantalla.blit(imagen_cuadrado,(50,0))
         pygame.display.flip()

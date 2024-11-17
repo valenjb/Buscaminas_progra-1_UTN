@@ -3,8 +3,9 @@ import random
 from config import *
 
 
+#-----------------------------  PANTALLA  ------------------------------------------------------
 
-#PANTALLA DE
+
 def pantalla_inicio():
     pantalla.fill((128, 0, 128))
     dibujar_texto("BUSCAMINA",font_inicio,(255,255,255),PANTALLA_ANCHO/2-100,PANTALLA_ALTO/2-100)
@@ -23,7 +24,9 @@ def generar_color_aleatorio()->list:
 
 
 
-#LOGICA DE MINAS
+#-----------------------------  LOGICA DE MINAS  ------------------------------------------------
+
+
 def inicializar_matriz(cant_filas:int , cant_colum:int)->list:
     matriz=[]
     for _ in range(cant_filas):
@@ -33,6 +36,8 @@ def inicializar_matriz(cant_filas:int , cant_colum:int)->list:
     return matriz
 
 
+
+#-----------------------------  MATRIZ  ------------------------------------------------
 
 
 def crear_matriz_buscaminas(cant_filas:int, cant_colum:int, minas:int)->list:
@@ -54,4 +59,4 @@ def test_matriz(matriz:list):
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
             print(matriz[i][j],end=" ")
-        print("")    
+        print("")
