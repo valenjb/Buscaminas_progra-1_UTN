@@ -13,6 +13,7 @@ pygame.display.set_icon(icono)
 contador = 0
 corriendo = True
 mostrar_inicio=True
+
 while corriendo == True:
 
     if mostrar_inicio:
