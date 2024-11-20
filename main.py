@@ -1,8 +1,8 @@
-from biblioteca import *
 import pygame
+from biblioteca import *
+from config import *
 import random
 import json
-
 
 
 pygame.display.set_caption("BUSCAMINA")
@@ -38,15 +38,15 @@ while corriendo == True:
     else:
         pantalla.fill(COLOR_TABLERO)
         crear_rectangulos(matriz_completa)
-        desplazamiento_x = (PANTALLA_ANCHO - 8 * 50) // 2
-        desplazamiento_y = (PANTALLA_ALTO - 8 * 50) // 2
         #crear_rectangulos(matriz_completa)
-        """ for fila in range(len(tablero)):
+        for fila in range(len(tablero)):
             for columna in range(len(tablero[0])):
+                desplazamiento_x = (PANTALLA_ANCHO - len(matriz_completa) * 50) // 2
+                desplazamiento_y = (PANTALLA_ALTO - len(matriz_completa) * 50) // 2
                 x = desplazamiento_x + columna * 50  # Desplazamiento en el eje X
                 y = desplazamiento_y + fila * 50
                 #pantalla.blit(matriz_completa[fila][columna],(x,y))
-                pantalla.blit(imagen_cuadrado, (x, y)) """
+                pantalla.blit(imagen_cuadrado, (x, y))
 
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:

@@ -1,67 +1,6 @@
 import pygame
 import random
-
-#-----------------------------  PANTALLA  ------------------------------------------------
-
-PANTALLA_ALTO = 800
-PANTALLA_ANCHO = 600
-RESOLUCION_PANTALLA = (PANTALLA_ANCHO, PANTALLA_ALTO)
-
-
-pantalla = pygame.display.set_mode(RESOLUCION_PANTALLA)
-color_fondo = [127, 157, 235]
-posicion_personaje = [400, 300]
-
-
-#-----------------------------  COLORES  -------------------------------------------------
-
-# Colores: RGB[A] (Red, Green, Blue) [Alpha] -> 0 - 255
-
-COLOR_ROJO = (255, 0, 0)
-COLOR_NARANJA = (245, 79, 7)
-COLOR_AZUL_CLARO = (127, 157, 235)
-COLOR_FUCSIA = (204, 6, 161)
-COLOR_TABLERO = (169, 169, 169)
-
-#----------------------------  FUENTE   -------------------------------------------------
-
-pygame.font.init()
-
-font_inicio=pygame.font.Font("font/mifuente.otf",36)
-
-
-#---------------------------  IMAGENES  -------------------------------------------------
-
-icono=pygame.image.load("img/logo_app.png")
-
-imagen_cuadrado=pygame.image.load("img/CUADRADO_BUSCAMINA.jpg")
-
-imagen_cuadrado=pygame.transform.scale(imagen_cuadrado,(50,50))
-
-imagen_mina = pygame.image.load("img/mina.png")
-imagen_mina = pygame.transform.scale(imagen_mina, (50, 50))
-
-imagen_bandera = pygame.image.load("img/bandera.png")
-imagen_bandera = pygame.transform.scale(imagen_mina, (50, 50))
-
-#--------------------------- BOTONES  --------------------------------------------------
-
-boton_jugar=pygame.Rect(PANTALLA_ANCHO/2-100,PANTALLA_ALTO/2-50,200,50)
-
-boton_salir=pygame.Rect(PANTALLA_ANCHO/2-100,PANTALLA_ALTO/2+50,200,50)
-
-texto_boton_jugar=font_inicio.render("Jugar",True,(0,0,0))
-
-texto_boton_salir=font_inicio.render("Salir",True,(255,255,255))
-
-
-
-
-
-
-
-
-
+from config import *
 
 #-----------------------------  PANTALLA  ------------------------------------------------------
 
@@ -78,6 +17,7 @@ def pantalla_inicio(pantalla,font_inicio):
 def dibujar_texto(texto,fuente,color,x,y):
     img=fuente.render(texto,True,color)
     pantalla.blit(img,(x,y))
+
 
 def generar_color_aleatorio()->list:
     return [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)]
@@ -111,10 +51,9 @@ def crear_matriz_buscaminas(cant_filas:int, cant_colum:int, minas:int)->list:
         if matriz[fila_random][columna_random]!=-1:
             matriz[fila_random][columna_random]=-1
             minas_colocadas+=1
-
-    #FALTA QUE LO PONGA EN EL MEDIO
-
+            
     return matriz
+
 
 def descrubir_minas_contiguas(cant_filas:int, cant_colum:int, matriz:list)->int:
     minas=0
@@ -127,6 +66,7 @@ def descrubir_minas_contiguas(cant_filas:int, cant_colum:int, matriz:list)->int:
                         minas+=1
     return minas
 
+
 def matriz_minas_contiguas(cant_filas:int, cant_column:int, matriz:list)->list:
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
@@ -137,49 +77,27 @@ def matriz_minas_contiguas(cant_filas:int, cant_column:int, matriz:list)->list:
 
                 elif pistas==0:
                     pass#libera cuadrados de alrededor      FALTA  REVISAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    
-                
     return matriz
-""" def crear_rectangulos(matriz):
-    for i in range(len(matriz)):
-        for j in range(len(matriz[i])):
-            elemento=str(matriz[i][j])
-            numero_superficie=font_inicio.render(elemento,True,(0,0,0))
-            rectangulo_numero_sup=pygame.Rect(50,50,50,50)
-            pygame.draw.rect(pantalla,(255, 0, 0),rectangulo_numero_sup)
-            pantalla.blit(numero_superficie,(rectangulo_numero_sup.x,rectangulo_numero_sup.y))
-            desplazamiento_x = (PANTALLA_ANCHO - 8 * 50) // 2
-            desplazamiento_y = (PANTALLA_ALTO - 8 * 50) // 2
-            x = desplazamiento_x + 8 * 50  # Desplazamiento en el eje X
-            y = desplazamiento_y + 8 * 50
-            #pygame.blit(a,(x,y)) 
 
-            pygame.display.update()
-"""
-
-            #x = desplazamiento_x + columna * 50  # Desplazamiento en el eje X
-            #y = desplazamiento_y + fila * 50
 
 def crear_rectangulos(matriz):
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
-            desplazamiento_x = (PANTALLA_ANCHO - 8 * 50) // 2
-            desplazamiento_y = (PANTALLA_ALTO - 8 * 50) // 2
             elemento=str(matriz[i][j])
-            x = desplazamiento_x + j * 50  # Desplazamiento en el eje X
+            desplazamiento_x = (PANTALLA_ANCHO - len(matriz) * 50) // 2
+            desplazamiento_y = (PANTALLA_ALTO - len(matriz) * 50) // 2
+            x = desplazamiento_x + j * 50
             y = desplazamiento_y + i * 50
             rectangulo_numero_sup=pygame.Rect(x,y, 50, 50)
-            pygame.draw.rect(pantalla,(255, 0, 0),rectangulo_numero_sup)
             numero_superficie=font_inicio.render(elemento,True,(0,0,0))
-            pantalla.blit(numero_superficie,(rectangulo_numero_sup.x,rectangulo_numero_sup.y))
-            #pygame.blit(a,(x,y)) 
-
+            pygame.draw.rect(pantalla,(COLOR_TABLERO),rectangulo_numero_sup)
+            if elemento == "-1":
+                pantalla.blit(numero_superficie,(rectangulo_numero_sup.x + 10,rectangulo_numero_sup.y + 8))
+            else:
+                pantalla.blit(numero_superficie,(rectangulo_numero_sup.x + 15,rectangulo_numero_sup.y + 10))
     pygame.display.update()
 
-""" desplazamiento_x = (PANTALLA_ANCHO - 8 * 50) // 2
-            desplazamiento_y = (PANTALLA_ALTO - 8 * 50) // 2
-            x = desplazamiento_x + 8 * 50  # Desplazamiento en el eje X
-            y = desplazamiento_y + 8 * 50 """
+
 def test_matriz(matriz:list):
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
