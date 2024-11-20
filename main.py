@@ -23,6 +23,7 @@ while corriendo == True:
 
             if event.type ==pygame.MOUSEBUTTONDOWN:
                 if boton_jugar.collidepoint(event.pos):
+                    
                     mostrar_inicio=False
                     
                     tablero = crear_matriz_buscaminas(8,8,10)
@@ -36,15 +37,16 @@ while corriendo == True:
                     print("Cerrando juego...")
     else:
         pantalla.fill(COLOR_TABLERO)
-        
+        crear_rectangulos(matriz_completa)
         desplazamiento_x = (PANTALLA_ANCHO - 8 * 50) // 2
         desplazamiento_y = (PANTALLA_ALTO - 8 * 50) // 2
-
-        for fila in range(len(tablero)):
+        #crear_rectangulos(matriz_completa)
+        """ for fila in range(len(tablero)):
             for columna in range(len(tablero[0])):
                 x = desplazamiento_x + columna * 50  # Desplazamiento en el eje X
                 y = desplazamiento_y + fila * 50
-                pantalla.blit(imagen_cuadrado, (x, y))
+                #pantalla.blit(matriz_completa[fila][columna],(x,y))
+                pantalla.blit(imagen_cuadrado, (x, y)) """
 
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:

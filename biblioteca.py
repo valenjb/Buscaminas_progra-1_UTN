@@ -134,18 +134,52 @@ def matriz_minas_contiguas(cant_filas:int, cant_column:int, matriz:list)->list:
                 pistas=descrubir_minas_contiguas(i,j,matriz)  #Mando la posicion de la matriz a fijar si tiene minas contiguas
                 if pistas > 0:
                     matriz[i][j]=pistas
+
                 elif pistas==0:
-                    #libera cuadrados de alrededor      FALTA  REVISAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    pass
+                    pass#libera cuadrados de alrededor      FALTA  REVISAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    
                 
     return matriz
+""" def crear_rectangulos(matriz):
+    for i in range(len(matriz)):
+        for j in range(len(matriz[i])):
+            elemento=str(matriz[i][j])
+            numero_superficie=font_inicio.render(elemento,True,(0,0,0))
+            rectangulo_numero_sup=pygame.Rect(50,50,50,50)
+            pygame.draw.rect(pantalla,(255, 0, 0),rectangulo_numero_sup)
+            pantalla.blit(numero_superficie,(rectangulo_numero_sup.x,rectangulo_numero_sup.y))
+            desplazamiento_x = (PANTALLA_ANCHO - 8 * 50) // 2
+            desplazamiento_y = (PANTALLA_ALTO - 8 * 50) // 2
+            x = desplazamiento_x + 8 * 50  # Desplazamiento en el eje X
+            y = desplazamiento_y + 8 * 50
+            #pygame.blit(a,(x,y)) 
 
+            pygame.display.update()
+"""
 
+            #x = desplazamiento_x + columna * 50  # Desplazamiento en el eje X
+            #y = desplazamiento_y + fila * 50
 
+def crear_rectangulos(matriz):
+    for i in range(len(matriz)):
+        for j in range(len(matriz[i])):
+            desplazamiento_x = (PANTALLA_ANCHO - 8 * 50) // 2
+            desplazamiento_y = (PANTALLA_ALTO - 8 * 50) // 2
+            elemento=str(matriz[i][j])
+            x = desplazamiento_x + j * 50  # Desplazamiento en el eje X
+            y = desplazamiento_y + i * 50
+            rectangulo_numero_sup=pygame.Rect(x,y, 50, 50)
+            pygame.draw.rect(pantalla,(255, 0, 0),rectangulo_numero_sup)
+            numero_superficie=font_inicio.render(elemento,True,(0,0,0))
+            pantalla.blit(numero_superficie,(rectangulo_numero_sup.x,rectangulo_numero_sup.y))
+            #pygame.blit(a,(x,y)) 
 
+    pygame.display.update()
 
-
-
+""" desplazamiento_x = (PANTALLA_ANCHO - 8 * 50) // 2
+            desplazamiento_y = (PANTALLA_ALTO - 8 * 50) // 2
+            x = desplazamiento_x + 8 * 50  # Desplazamiento en el eje X
+            y = desplazamiento_y + 8 * 50 """
 def test_matriz(matriz:list):
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
