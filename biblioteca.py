@@ -27,21 +27,21 @@ COLOR_TABLERO = (169, 169, 169)
 
 pygame.font.init()
 
-font_inicio=pygame.font.Font("Buscaminas_progra-1_UTN/img/mifuente.otf",36)
+font_inicio=pygame.font.Font("font/mifuente.otf",36)
 
 
 #---------------------------  IMAGENES  -------------------------------------------------
 
-icono=pygame.image.load("Buscaminas_progra-1_UTN/img/logo_app.png")
+icono=pygame.image.load("img/logo_app.png")
 
-imagen_cuadrado=pygame.image.load("Buscaminas_progra-1_UTN/img/CUADRADO_BUSCAMINA.jpg")
+imagen_cuadrado=pygame.image.load("img/CUADRADO_BUSCAMINA.jpg")
 
 imagen_cuadrado=pygame.transform.scale(imagen_cuadrado,(50,50))
 
-imagen_mina = pygame.image.load("Buscaminas_progra-1_UTN/img/mina.png")
+imagen_mina = pygame.image.load("img/mina.png")
 imagen_mina = pygame.transform.scale(imagen_mina, (50, 50))
 
-imagen_bandera = pygame.image.load("Buscaminas_progra-1_UTN/img/bandera.png")
+imagen_bandera = pygame.image.load("img/bandera.png")
 imagen_bandera = pygame.transform.scale(imagen_mina, (50, 50))
 
 #--------------------------- BOTONES  --------------------------------------------------
