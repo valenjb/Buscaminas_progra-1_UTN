@@ -1,14 +1,13 @@
+from biblioteca import *
 import pygame
 import random
 import json
-from biblioteca import *
-from config import *
+
+
 
 pygame.display.set_caption("BUSCAMINA")
 
 pygame.display.set_icon(icono)
-
-
 
 contador = 0
 corriendo = True
@@ -17,7 +16,7 @@ mostrar_inicio=True
 while corriendo == True:
 
     if mostrar_inicio:
-        pantalla_inicio()
+        pantalla_inicio(pantalla,font_inicio)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 corriendo=False
@@ -27,7 +26,10 @@ while corriendo == True:
                     mostrar_inicio=False
                     
                     tablero = crear_matriz_buscaminas(8,8,10)
-                    test_matriz(tablero)          #PARA USAR CUANDO TESTEAMOS
+                    test_matriz(tablero)
+                    print("________________________________")
+                    matriz_completa=matriz_minas_contiguas(8,8,tablero)
+                    test_matriz(matriz_completa)          #PARA USAR CUANDO TESTEAMOS
 
                 if boton_salir.collidepoint(event.pos):
                     corriendo=False
