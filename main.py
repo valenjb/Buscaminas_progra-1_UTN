@@ -10,7 +10,7 @@ pygame.display.set_icon(icono)
 
 contador = 0
 corriendo = True
-mostrar_inicio = True
+mostrar_inicio = True                                                                      # Diccionario para las banderas
 
 while corriendo:
     if mostrar_inicio:
@@ -25,42 +25,28 @@ while corriendo:
                     estados = crear_diccionario_estados(8, 8)
                     banderas = crear_diccionario_banderas(8, 8)
                     matriz_completa = matriz_minas_contiguas(8, 8, tablero)
+
+                    evento=event.pos
                 elif boton_salir.collidepoint(event.pos):
                     corriendo = False
     else:
         pantalla.fill(COLOR_TABLERO)
-        crear_rectangulos(matriz_completa, estados, pantalla)
-        
-        desplazamiento_x = (PANTALLA_ANCHO - len(tablero) * 50) // 2
-        desplazamiento_y = (PANTALLA_ALTO - len(tablero) * 50) // 2
-
-        for (fila, columna) in banderas:                                                 # Redibujar las banderas
-            if banderas[(fila, columna)] == True:                                        # Solo redibujar casillas con bandera
-                x = desplazamiento_x + columna * 50
-                y = desplazamiento_y + fila * 50
-                pantalla.blit(imagen_bandera, (x, y))
+        desplazamiento_x = (PANTALLA_ANCHO - len(matriz_completa) * 50) // 2
+        desplazamiento_y = (PANTALLA_ALTO - len(matriz_completa) * 50) // 2
+        crear_rectangulos(matriz_completa, estados, pantalla,desplazamiento_x,desplazamiento_y)
+        redibujar_bandera(banderas,desplazamiento_x,desplazamiento_y,evento)
 
         for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:               # Clic izquierdo para descubrir casilla
-                mouse_x, mouse_y = event.pos
-                fila = (mouse_y - desplazamiento_y) // 50
-                columna = (mouse_x - desplazamiento_x) // 50
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:          # Clic izquierdo para descubrir casilla
+                event=event.pos
+
+                descubre_casillero(estados,banderas,event,desplazamiento_x,desplazamiento_y)
+
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:        # Clic derecho para poner/sacar banderas
+                event=event.pos
+    
+                poner_sacar_banderas(estados,banderas,event,desplazamiento_x,desplazamiento_y)
                 
-                if (fila, columna) in estados and banderas[(fila, columna)] == False :   # Verifica que no tenga bandera, si no tiene descubre la casilla
-                    estados[(fila, columna)] = False
-
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:             # Clic derecho para poner/sacar banderas
-                mouse_x, mouse_y = event.pos
-                fila = (mouse_y - desplazamiento_y) // 50
-                columna = (mouse_x - desplazamiento_x) // 50
-
-                if (fila, columna) in estados and estados[(fila, columna)] == True:      # Revisa si estás en un casillero y si este está tapado
-                    if banderas[(fila, columna)] == False :                              # Si la posicion no está en la misma posicion de una bandera, pone una bandera
-                        banderas[(fila, columna)] = True
-                        print(banderas)
-                    else:                                                                # Si ya tiene bandera, saca la bandera
-                        banderas[(fila, columna)] = False
-                        print(banderas)
 
             elif event.type == pygame.QUIT:
                 corriendo = False
@@ -69,3 +55,19 @@ while corriendo:
         pygame.display.flip()
 
 pygame.quit()
+
+
+
+
+def genera_lista_alfanumerica_random(cantidad:int)->list:
+    lista=[]
+    
+    for _ in range(cantidad):
+        tipo_caracter=random.randint(0,1)
+        if tipo_caracter==0:
+            caracter=str(chr(random.randint(48,57)))
+            lista+=[caracter]
+        else:
+            caracter=chr(random.randint(65,90))
+            lista+=[caracter]
+    return lista
