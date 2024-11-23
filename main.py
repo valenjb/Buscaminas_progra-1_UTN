@@ -55,19 +55,3 @@ while corriendo:
         pygame.display.flip()
 
 pygame.quit()
-
-
-
-
-def genera_lista_alfanumerica_random(cantidad:int)->list:
-    lista=[]
-    
-    for _ in range(cantidad):
-        tipo_caracter=random.randint(0,1)
-        if tipo_caracter==0:
-            caracter=str(chr(random.randint(48,57)))
-            lista+=[caracter]
-        else:
-            caracter=chr(random.randint(65,90))
-            lista+=[caracter]
-    return lista
