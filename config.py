@@ -40,7 +40,7 @@ imagen_mina = pygame.image.load("img/mina.png")
 imagen_mina = pygame.transform.scale(imagen_mina, (50, 50))  #PONERLO CON RESPECTO A EL TAMAÑO DE PANTALLA
 
 imagen_bandera = pygame.image.load("img/bandera.png")
-imagen_bandera = pygame.transform.scale(imagen_mina, (50, 50))
+imagen_bandera = pygame.transform.scale(imagen_bandera, (50, 50))
 
 #--------------------------- BOTONES  --------------------------------------------------
 
