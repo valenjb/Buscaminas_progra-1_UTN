@@ -26,7 +26,7 @@ while corriendo == True:
                     
                     mostrar_inicio=False
                     
-                    tablero = crear_matriz_buscaminas(16,30,10)
+                    tablero = crear_matriz_buscaminas(8,8,10)
                     test_matriz(tablero)
                     print("________________________________")
                     matriz_completa=matriz_minas_contiguas(8,8,tablero)
