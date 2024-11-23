@@ -6,13 +6,12 @@ import json
 
 
 pygame.display.set_caption("BUSCAMINA")
-
 pygame.display.set_icon(icono)
 
 contador = 0
 corriendo = True
-mostrar_inicio=True
-banderas = {} # Diccionario para las banderas
+mostrar_inicio = True
+banderas = {}                                                                      # Diccionario para las banderas
 
 while corriendo:
     if mostrar_inicio:
@@ -32,33 +31,36 @@ while corriendo:
         pantalla.fill(COLOR_TABLERO)
         crear_rectangulos(matriz_completa, estados, pantalla)
 
-        for (fila, columna) in banderas:             # Redibujar las banderas
+        for (fila, columna) in banderas:                                            # Redibujar las banderas
             x = desplazamiento_x + columna * 50
             y = desplazamiento_y + fila * 50
             pantalla.blit(imagen_bandera, (x, y))
 
         for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:          # Clic izquierdo para descubrir casilla
                 mouse_x, mouse_y = event.pos
                 desplazamiento_x = (PANTALLA_ANCHO - len(tablero) * 50) // 2
                 desplazamiento_y = (PANTALLA_ALTO - len(tablero) * 50) // 2
                 fila = (mouse_y - desplazamiento_y) // 50
                 columna = (mouse_x - desplazamiento_x) // 50
-                if (fila, columna) in estados:
-                    estados[(fila, columna)] = False  # Cambia el estado  (bora la casilla y descubre el numero)
+                
+                if (fila, columna) in estados and (fila, columna) not in banderas:  # Verifica que no tenga bandera, si no tiene descubre la casilla
+                    estados[(fila, columna)] = False
 
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:        # Clic derecho para poner/sacar banderas
                 mouse_x, mouse_y = event.pos
                 desplazamiento_x = (PANTALLA_ANCHO - len(tablero) * 50) // 2
                 desplazamiento_y = (PANTALLA_ALTO - len(tablero) * 50) // 2
                 fila = (mouse_y - desplazamiento_y) // 50
                 columna = (mouse_x - desplazamiento_x) // 50
 
-                if (fila, columna) in estados and estados[(fila, columna)] == True:  # Casilla cubierta
-                    if (fila, columna) not in banderas:
-                        banderas[(fila, columna)] = True  # Colocar bandera
-                    else:
-                        del banderas[(fila, columna)]  # Quitar bandera
+                if (fila, columna) in estados and estados[(fila, columna)] == True:  # Revisa si estás en un casillero y si este está tapado
+                    if (fila, columna) not in banderas:                              # Si la posicion no está en la misma posicion de una bandera, pone una bandera
+                        banderas[(fila, columna)] = True
+                        print(banderas)  
+                    else:                                                            # Si ya tiene bandera, saca la bandera
+                        del banderas[(fila, columna)]
+                        print(banderas)
 
             elif event.type == pygame.QUIT:
                 corriendo = False

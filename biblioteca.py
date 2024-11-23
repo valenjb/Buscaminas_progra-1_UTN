@@ -97,11 +97,11 @@ def test_matriz(matriz:list):
         for j in range(len(matriz[i])):
             print(f"({matriz[i][j]})",end=" ")
         print("")
-        
-        
-        
-        
-        
+
+
+
+
+
 def crear_diccionario_estados(cant_filas: int, cant_colum: int) -> dict:
     return {(fila, col): True 
             for fila in range(cant_filas) 
