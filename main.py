@@ -26,7 +26,7 @@ while corriendo == True:
                     
                     mostrar_inicio=False
                     
-                    tablero = crear_matriz_buscaminas(8,8,10)
+                    tablero = crear_matriz_buscaminas(16,30,10)
                     test_matriz(tablero)
                     print("________________________________")
                     matriz_completa=matriz_minas_contiguas(8,8,tablero)
@@ -37,16 +37,16 @@ while corriendo == True:
                     print("Cerrando juego...")
     else:
         pantalla.fill(COLOR_TABLERO)
-        crear_rectangulos(matriz_completa)
-        #crear_rectangulos(matriz_completa)
+        crear_rectangulos(matriz_completa,pantalla)
         for fila in range(len(tablero)):
             for columna in range(len(tablero[0])):
                 desplazamiento_x = (PANTALLA_ANCHO - len(matriz_completa) * 50) // 2
                 desplazamiento_y = (PANTALLA_ALTO - len(matriz_completa) * 50) // 2
                 x = desplazamiento_x + columna * 50  # Desplazamiento en el eje X
                 y = desplazamiento_y + fila * 50
-                #pantalla.blit(matriz_completa[fila][columna],(x,y))
                 pantalla.blit(imagen_cuadrado, (x, y))
+
+                                                                                                #HACERLO FUNCION Y AGREGAR FLAG PARA QUE NO PISE CON CADA ITERACION
 
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:

@@ -80,7 +80,17 @@ def matriz_minas_contiguas(cant_filas:int, cant_column:int, matriz:list)->list:
     return matriz
 
 
-def crear_rectangulos(matriz):
+""" FUNCION PARA CUADRADOS (AGREGAR FLAG)"""
+def crear_cuadrados_tablero(matriz,tablero,pantalla):
+        for fila in range(len(tablero)):
+            for columna in range(len(tablero[0])):
+                desplazamiento_x = (PANTALLA_ANCHO - len(matriz) * 50) // 2
+                desplazamiento_y = (PANTALLA_ALTO - len(matriz) * 50) // 2
+                x = desplazamiento_x + columna * 50  # Desplazamiento en el eje X
+                y = desplazamiento_y + fila * 50
+                pantalla.blit(imagen_cuadrado, (x, y)) 
+
+def crear_rectangulos(matriz, pantalla:pygame.Surface):
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
             elemento=str(matriz[i][j])
@@ -95,7 +105,6 @@ def crear_rectangulos(matriz):
                 pantalla.blit(numero_superficie,(rectangulo_numero_sup.x + 10,rectangulo_numero_sup.y + 8))
             else:
                 pantalla.blit(numero_superficie,(rectangulo_numero_sup.x + 15,rectangulo_numero_sup.y + 10))
-    pygame.display.update()
 
 
 def test_matriz(matriz:list):
