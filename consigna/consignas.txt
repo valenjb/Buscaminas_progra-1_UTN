@@ -1,35 +1,8 @@
-Videojuego Buscaminas, que tendrá los siguientes datos:
+Dificultad:
+    Fácil: Matriz de 8 filas por 8 columnas, con 10 minas.
+    Medio: Matriz de 16 filas por 16 columnas, con 40 minas.
+    Difícil: Matriz de 16 filas por 30 columnas, con 100 minas.
 
-Matriz de 8 filas por 8 columnas.
-Datos para llenar la matriz de 8 filas por 8 columnas.
-Datos para colocar en la matriz de 8 filas por 8 columnas cada una de las minas.
-Dificultad: Nivel Fácil: Matriz de 8 filas por 8 columnas, con 10 minas
-
-Requerimientos:
-
-A. Desarrollar una función que realice la creación dinámica de una matriz de 8 filas por 8
-columnas. En la misma se deberá incluir:
-Menos uno (-1): Si hay una mina en la coordenada de la matriz
-Cero (0): Si no hay una mina en la coordenada de la matriz, ni minas contiguas.
-
-B. Desarrollar una función que verifique cada elemento de la matriz y realice la siguiente
-modificación en cada cero (0) que encuentre si se cumple alguna de las siguientes condiciones:
-Uno (1): Si no hay una mina en la coordenada de la matriz, pero hay una (1) mina
-contigua.
-Dos (2): Si no hay una mina en la coordenada de la matriz, pero hay dos (2) minas
-contiguas.
-Tres (3): Si no hay una mina en la coordenada de la matriz, pero hay tres (3) minas
-contiguas.
-Cuatro (4): Si no hay una mina en la coordenada de la matriz, pero hay cuatro (4) minas
-contiguas.
-Cinco (5): Si no hay una mina en la coordenada de la matriz, pero hay cinco (5) minas
-contiguas.
-Seis (6): Si no hay una mina en la coordenada de la matriz, pero hay seis (6) minas
-contiguas.
-Siete (7): Si no hay una mina en la coordenada de la matriz, pero hay siete (7) minas
-contiguas.
-Ocho (8): Si no hay una mina en la coordenada de la matriz, pero hay ocho (8) minas
-contiguas.
 
 C. Crear una pantalla de inicio, con cuatro (4) botones:
 Nivel
@@ -39,18 +12,13 @@ Salir
 La pantalla deberá tener:
 Una imagen cubriendo completamente el fondo.
 Sonido de fondo.
-Al hacer clic en el botón Jugar se iniciará el juego.
 
 D. En la pantalla del juego:
-Habrá un tablero donde a cada casillero del mismo le corresponderá un elemento de la
-matriz.
 Crear un (1) botón con la etiqueta Reiniciar.
 
 
 E. Al comenzar el juego:
 Se deberá imprimir el Puntaje en 0000.
-Al hacer clic izquierdo en uno de los casilleros del tablero se efectuará el descubrimiento
-del mismo.
 Al hacer clic derecho en uno de los casilleros del tablero se efectuará el marcado de una
 bandera en el mismo, volviendo a hacer clic derecho sobre el mismo casillero la bandera
 será quitada.
@@ -69,3 +37,17 @@ guardar ese nombre con su puntaje en un archivo, y volver a la pantalla de inici
 I. Al ingresar a la pantalla inicial y hacer clic en el botón Ver Puntajes, se deberá mostrar los 3
 (tres) mejores puntajes ordenados de mayor a menor, junto con su nombre de usuario (Nick)
 correspondiente. Debe haber un (1) botón para volver al menú principal.
+
+OPCIONALES:
+o Nivel de dificultad.
+o Pantalla de inicio: agregar un (1) botón para activar / desactivar el sonido de fondo.
+o Al descubrir un casillero:
+    o Reproducir un sonido de casillero sin mina.
+    o Reproducir un sonido (podría ser una explosión) de casillero con mina.
+o Agregar imágenes, sonidos, y animaciones donde corresponda.
+o Agregar un reloj (timer) en minutos y segundos.
+
+
+DOCUMENTAR TODAS LAS FUNCIONES Y CAMBIAR SUS NOMBRES CORRESPONDIENTEMENTE
+
+El formato del archivo que se debe crear para guardar puntaje y nick tiene que ser TXT, CSV o JSON.
