@@ -107,13 +107,16 @@ def crear_diccionario_estados(cant_filas: int, cant_colum: int) -> dict:
             for fila in range(cant_filas) 
             for col in range(cant_colum)}
 
+def crear_diccionario_banderas(cant_filas: int, cant_colum: int) -> dict:
+    return {(fila, col): False
+            for fila in range(cant_filas) 
+            for col in range(cant_colum)}
 
 
-def crear_rectangulos(matriz, estados, pantalla: pygame.Surface):
+
+def crear_rectangulos(matriz, estados, pantalla: pygame.Surface,desplazamiento_x,desplazamiento_y):
     for fila in range(len(matriz)):
         for col in range(len(matriz[fila])):
-            desplazamiento_x = (PANTALLA_ANCHO - len(matriz) * 50) // 2
-            desplazamiento_y = (PANTALLA_ALTO - len(matriz) * 50) // 2
             x = desplazamiento_x + col * 50
             y = desplazamiento_y + fila * 50
 
@@ -123,3 +126,47 @@ def crear_rectangulos(matriz, estados, pantalla: pygame.Surface):
                 numero = matriz[fila][col]
                 texto = font_inicio.render(str(numero), True, (0, 0, 0))
                 pantalla.blit(texto, (x + 15, y + 10))
+
+
+
+
+
+def descubre_casillero(estados,banderas,eventpos,desplazamiento_x,desplazamiento_y):
+    mouse_x, mouse_y = eventpos
+    
+    fila = (mouse_y - desplazamiento_y) // 50
+    columna = (mouse_x - desplazamiento_x) // 50
+    
+    if (fila, columna) in estados and banderas[(fila,columna)]==False: # Verifica que no tenga bandera, si no tiene descubre la casilla
+        #print(fila,"---------",columna,"------------",banderas)
+        #print(estados,"-----------estadooooooooos")
+        estados[(fila, columna)] = False
+
+
+def poner_sacar_banderas(estados,banderas,eventpos,desplazamiento_x,desplazamiento_y):
+    mouse_x, mouse_y = eventpos
+    
+    
+    fila = (mouse_y - desplazamiento_y) // 50
+    columna = (mouse_x - desplazamiento_x) // 50
+    if (fila, columna) in estados and estados[(fila, columna)] == True: 
+                    #print(fila,"---------",columna,"------------",banderas) # Revisa si estás en un casillero y si este está tapado
+                    if banderas[(fila, columna)] == False:                              # Si la posicion no está en la misma posicion de una bandera, pone una bandera
+                        banderas[(fila, columna)] = True
+                        #print(banderas)  
+                    else:                                                            # Si ya tiene bandera, saca la bandera
+                        banderas[(fila, columna)]=False
+                        #print(banderas)
+    
+
+
+def redibujar_bandera(banderas,desplazamiento_x,desplazamiento_y,eventpos):
+    mouse_x,mouse_y = eventpos
+    
+    fila = (mouse_y - desplazamiento_y) // 50
+    columna = (mouse_x - desplazamiento_x) // 50
+    for (fila, columna) in banderas:    
+        if banderas[(fila,columna)]==True:                                        # Redibujar las banderas
+            x = desplazamiento_x + columna * 50
+            y = desplazamiento_y + fila * 50
+            pantalla.blit(imagen_bandera, (x, y))
