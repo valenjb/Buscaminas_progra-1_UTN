@@ -100,10 +100,14 @@ def test_matriz(matriz:list):
 
 
 
-
-
 def crear_diccionario_estados(cant_filas: int, cant_colum: int) -> dict:
     return {(fila, col): True 
+            for fila in range(cant_filas) 
+            for col in range(cant_colum)}
+
+
+def crear_diccionario_banderas(cant_filas: int, cant_colum: int) -> dict:
+    return {(fila, col): False
             for fila in range(cant_filas) 
             for col in range(cant_colum)}
 
