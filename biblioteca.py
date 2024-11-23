@@ -80,31 +80,16 @@ def matriz_minas_contiguas(cant_filas:int, cant_column:int, matriz:list)->list:
     return matriz
 
 
-""" FUNCION PARA CUADRADOS (AGREGAR FLAG)"""
-def crear_cuadrados_tablero(matriz,tablero,pantalla):
-        for fila in range(len(tablero)):
-            for columna in range(len(tablero[0])):
-                desplazamiento_x = (PANTALLA_ANCHO - len(matriz) * 50) // 2
-                desplazamiento_y = (PANTALLA_ALTO - len(matriz) * 50) // 2
-                x = desplazamiento_x + columna * 50  # Desplazamiento en el eje X
-                y = desplazamiento_y + fila * 50
-                pantalla.blit(imagen_cuadrado, (x, y)) 
+# """ FUNCION PARA CUADRADOS (AGREGAR FLAG)"""
+# def crear_cuadrados_tablero(matriz,tablero,pantalla):
+#         for fila in range(len(tablero)):
+#             for columna in range(len(tablero[0])):
+#                 desplazamiento_x = (PANTALLA_ANCHO - len(matriz) * 50) // 2
+#                 desplazamiento_y = (PANTALLA_ALTO - len(matriz) * 50) // 2
+#                 x = desplazamiento_x + columna * 50  # Desplazamiento en el eje X
+#                 y = desplazamiento_y + fila * 50
+#                 pantalla.blit(imagen_cuadrado, (x, y)) 
 
-def crear_rectangulos(matriz, pantalla:pygame.Surface):
-    for i in range(len(matriz)):
-        for j in range(len(matriz[i])):
-            elemento=str(matriz[i][j])
-            desplazamiento_x = (PANTALLA_ANCHO - len(matriz) * 50) // 2
-            desplazamiento_y = (PANTALLA_ALTO - len(matriz) * 50) // 2
-            x = desplazamiento_x + j * 50
-            y = desplazamiento_y + i * 50
-            rectangulo_numero_sup=pygame.Rect(x,y, 50, 50)
-            numero_superficie=font_inicio.render(elemento,True,(0,0,0))
-            pygame.draw.rect(pantalla,(COLOR_TABLERO),rectangulo_numero_sup)
-            if elemento == "-1":
-                pantalla.blit(numero_superficie,(rectangulo_numero_sup.x + 10,rectangulo_numero_sup.y + 8))
-            else:
-                pantalla.blit(numero_superficie,(rectangulo_numero_sup.x + 15,rectangulo_numero_sup.y + 10))
 
 
 def test_matriz(matriz:list):
@@ -112,3 +97,29 @@ def test_matriz(matriz:list):
         for j in range(len(matriz[i])):
             print(f"({matriz[i][j]})",end=" ")
         print("")
+        
+        
+        
+        
+        
+def crear_diccionario_estados(cant_filas: int, cant_colum: int) -> dict:
+    return {(fila, col): True 
+            for fila in range(cant_filas) 
+            for col in range(cant_colum)}
+
+
+
+def crear_rectangulos(matriz, estados, pantalla: pygame.Surface):
+    for fila in range(len(matriz)):
+        for col in range(len(matriz[fila])):
+            desplazamiento_x = (PANTALLA_ANCHO - len(matriz) * 50) // 2
+            desplazamiento_y = (PANTALLA_ALTO - len(matriz) * 50) // 2
+            x = desplazamiento_x + col * 50
+            y = desplazamiento_y + fila * 50
+
+            if estados[(fila, col)]:  # Si está cubierto (estado true)
+                pantalla.blit(imagen_cuadrado, (x, y))
+            else:  # Descubierto
+                numero = matriz[fila][col]
+                texto = font_inicio.render(str(numero), True, (0, 0, 0))
+                pantalla.blit(texto, (x + 15, y + 10))
