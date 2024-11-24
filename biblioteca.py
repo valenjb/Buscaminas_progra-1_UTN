@@ -9,7 +9,7 @@ def pantalla_inicio(pantalla, font_inicio):
     pantalla.blit(imagen_fondo, (0, 0))
 
     # Crear texto con gradiente
-    texto_gradiente = texto_con_gradiente("BUSCAMINA", font_inicio, (255, 0, 0), (0, 0, 0), PANTALLA_ANCHO, PANTALLA_ALTO)
+    texto_gradiente = texto_con_gradiente("BUSCAMINAS", font_inicio, (255, 0, 0), (0, 0, 0), PANTALLA_ANCHO, PANTALLA_ALTO)
     pantalla.blit(texto_gradiente, (PANTALLA_ANCHO / 2 - texto_gradiente.get_width() // 2, PANTALLA_ALTO / 2 - 180))
 
     # Dibujar botones
