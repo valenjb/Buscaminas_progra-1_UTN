@@ -128,19 +128,27 @@ def crear_diccionario_banderas(cant_filas: int, cant_colum: int) -> dict:
 
 
 
-def crear_rectangulos(matriz, estados, pantalla: pygame.Surface,desplazamiento_x,desplazamiento_y):
-    for fila in range(len(matriz)):
-        for col in range(len(matriz[fila])):
-            x = desplazamiento_x + col * 50
-            y = desplazamiento_y + fila * 50
+def crear_rectangulos(matriz, estados, pantalla:pygame.Surface, desplazamiento_x, desplazamiento_y, margen=2):
+    for i in range(len(matriz)):
+        for j in range(len(matriz[i])):
+            x = desplazamiento_x + j * 50
+            y = desplazamiento_y + i * 50
 
-            if estados[(fila, col)]:  # Si está cubierto (estado true)
+            if estados[(i, j)]:  # Si está cubierto (estando True)
                 pantalla.blit(imagen_cuadrado, (x, y))
-            else:  # Descubierto
-                numero = matriz[fila][col]
+            elif matriz[i][j] == -1 and estados[(i, j)] == False:  # Si es una mina y descubierto
+                pantalla.blit(imagen_mina, (x, y))
+            elif matriz[i][j] == 0  and estados[(i, j)] == False:  # Si es un cuadrado vacío
+                pygame.draw.rect(pantalla, COLOR_TABLERO, (x, y, 50, 50))
+            else:  # Si es un número y se lo descubre
+                numero = matriz[i][j]
                 texto = font_inicio.render(str(numero), True, (0, 0, 0))
-                pantalla.blit(texto, (x + 15, y + 10))
+                pantalla.blit(texto, (x + 17, y + 10)) #el +15 y +10 es para centrar el numero y que quede mejor
 
+            pygame.draw.line(pantalla, (0, 0, 0), (x, y), (x + 50, y), margen)  # Línea arriba
+            pygame.draw.line(pantalla, (0, 0, 0), (x, y), (x, y + 50), margen)  # Línea izq
+            pygame.draw.line(pantalla, (0, 0, 0), (x + 50, y), (x + 50, y + 50), margen)  # Línea der
+            pygame.draw.line(pantalla, (0, 0, 0), (x, y + 50), (x + 50, y + 50), margen)  # Linea abajo
 
 
 
@@ -209,3 +217,13 @@ def texto_con_gradiente(texto, fuente, color_inicio, color_fin, ancho, alto):
     superficie.blit(texto_superficie, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
     
     return superficie
+
+
+
+def mostrar_bombas(matriz, estados, pantalla, desplazamiento_x, desplazamiento_y):
+    for fila in range(len(matriz)):
+        for columna in range(len(matriz[fila])):
+            if matriz[fila][columna] == -1 and estados[(fila, columna)] == False:  # Si es una bomba y está descubierta
+                x = desplazamiento_x + columna * 50 
+                y = desplazamiento_y + fila * 50    
+                pantalla.blit(imagen_mina, (x, y))   

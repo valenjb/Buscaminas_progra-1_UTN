@@ -10,7 +10,7 @@ pygame.display.set_icon(icono)
 
 #AUDIO
 pygame.mixer.music.play(-1)
-pygame.mixer.music.set_volume(0.2)
+pygame.mixer.music.set_volume(0.04)
 
 contador = 0
 corriendo = True
@@ -25,20 +25,24 @@ while corriendo:
             elif event.type == pygame.MOUSEBUTTONDOWN  and event.button == 1:
                 if boton_jugar.collidepoint(event.pos):
                     mostrar_inicio = False
-                    tablero = crear_matriz_buscaminas(8, 8, 10)
-                    estados = crear_diccionario_estados(8, 8)
-                    banderas = crear_diccionario_banderas(8, 8)
-                    matriz_completa = matriz_minas_contiguas(8, 8, tablero)
+                    tablero = crear_matriz_buscaminas(8,8,10)
+                    estados = crear_diccionario_estados(8,8)
+                    banderas = crear_diccionario_banderas(8,8)
+                    matriz_completa = matriz_minas_contiguas(8,8, tablero)
 
                     evento=event.pos
                 elif boton_salir.collidepoint(event.pos):
                     corriendo = False
     else:
         pantalla.fill(COLOR_TABLERO)
-        desplazamiento_x = (PANTALLA_ANCHO - len(matriz_completa) * 50) // 2
-        desplazamiento_y = (PANTALLA_ALTO - len(matriz_completa) * 50) // 2
-        crear_rectangulos(matriz_completa, estados, pantalla,desplazamiento_x,desplazamiento_y)
-        redibujar_bandera(banderas,desplazamiento_x,desplazamiento_y,evento)
+        margen = 2
+        desplazamiento_x = (PANTALLA_ANCHO - len(matriz_completa[0]) * (50 + margen)) // 2
+        desplazamiento_y = (PANTALLA_ALTO - len(matriz_completa) * (50 + margen)) // 2
+        
+        crear_rectangulos(matriz_completa, estados, pantalla, desplazamiento_x, desplazamiento_y, margen=2)
+        mostrar_bombas(matriz_completa, estados, pantalla, desplazamiento_x, desplazamiento_y)
+        redibujar_bandera(banderas, desplazamiento_x, desplazamiento_y, evento)
+
 
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:          # Clic izquierdo para descubrir casilla
