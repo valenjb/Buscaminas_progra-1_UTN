@@ -44,19 +44,17 @@ while corriendo:
         redibujar_bandera(banderas, desplazamiento_x, desplazamiento_y, evento)
 
         for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:                                        # Clic izquierdo para descubrir cuadrados
                 if manejar_perdida(matriz_completa, estados, event.pos, desplazamiento_x, desplazamiento_y):
-                    for i in range (len(matriz_completa)):
-                        for j in range(len(matriz_completa[0])):
-                            estados[(i,j)]=False # Finaliza el bucle del juego     # Clic izquierdo para descubrir casilla
+                    limpiar_tablero(estados, matriz_completa)                                 
                 else:
                     event=event.pos
                     descubre_casillero(estados,banderas,event,desplazamiento_x,desplazamiento_y)
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:        # Clic derecho para poner/sacar banderas
+
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:                                      # Clic derecho para poner/sacar banderas
                 event=event.pos
-    
+
                 poner_sacar_banderas(estados,banderas,event,desplazamiento_x,desplazamiento_y)
-                
 
             elif event.type == pygame.QUIT:
                 corriendo = False

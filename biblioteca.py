@@ -234,3 +234,8 @@ def manejar_perdida(matriz, estados, eventpos, desplazamiento_x, desplazamiento_
         print("¡Hiciste clic en una mina! Fin del juego.")
         retorno=True  # Indica que el jugador ha perdido
     return retorno  # El jugador no perdió
+
+def limpiar_tablero(estados, matriz):
+    for i in range (len(matriz)):
+        for j in range(len(matriz[0])):
+            estados[(i,j)]=False
