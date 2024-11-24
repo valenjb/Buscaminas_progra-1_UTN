@@ -12,6 +12,13 @@ color_fondo = [127, 157, 235]
 posicion_personaje = [400, 300]
 
 
+
+#-----------------------------  AUDIO  -------------------------------------------------
+
+pygame.mixer.init()
+pygame.mixer.music.load("audio/cancion.mp3")
+
+
 #-----------------------------  COLORES  -------------------------------------------------
 
 # Colores: RGB[A] (Red, Green, Blue) [Alpha] -> 0 - 255

@@ -4,9 +4,14 @@ from config import *
 import random
 import json
 
-
+#NOMBRE DE ARCHIVO E ICONO
 pygame.display.set_caption("BUSCAMINA")
 pygame.display.set_icon(icono)
+
+#AUDIO
+pygame.mixer.init()
+pygame.mixer.music.play(-1)
+pygame.mixer.music.set_volume(0.2)
 
 contador = 0
 corriendo = True
