@@ -10,7 +10,7 @@ pygame.display.set_icon(icono)
 
 #AUDIO
 pygame.mixer.music.play(-1)
-pygame.mixer.music.set_volume(0.2)
+pygame.mixer.music.set_volume(0.1)
 
 contador = 0
 corriendo = True
@@ -40,7 +40,7 @@ while corriendo:
         desplazamiento_y = (PANTALLA_ALTO - len(matriz_completa) * (50 + margen)) // 2
         
         crear_rectangulos(matriz_completa, estados, pantalla, desplazamiento_x, desplazamiento_y, margen=2)
-        mostrar_bombas(matriz_completa, estados, pantalla, desplazamiento_x, desplazamiento_y)
+        
         redibujar_bandera(banderas, desplazamiento_x, desplazamiento_y, evento)
 
 

@@ -217,13 +217,3 @@ def texto_con_gradiente(texto, fuente, color_inicio, color_fin, ancho, alto):
     superficie.blit(texto_superficie, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
     
     return superficie
-
-
-
-def mostrar_bombas(matriz, estados, pantalla, desplazamiento_x, desplazamiento_y):
-    for fila in range(len(matriz)):
-        for columna in range(len(matriz[fila])):
-            if matriz[fila][columna] == -1 and estados[(fila, columna)] == False:  # Si es una bomba y está descubierta
-                x = desplazamiento_x + columna * 50 
-                y = desplazamiento_y + fila * 50    
-                pantalla.blit(imagen_mina, (x, y))   
