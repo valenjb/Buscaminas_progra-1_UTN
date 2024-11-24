@@ -22,7 +22,7 @@ while corriendo:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 corriendo = False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN  and event.button == 1:
                 if boton_jugar.collidepoint(event.pos):
                     mostrar_inicio = False
                     tablero = crear_matriz_buscaminas(8, 8, 10)
