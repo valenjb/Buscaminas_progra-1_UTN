@@ -235,7 +235,40 @@ def manejar_perdida(matriz, estados, eventpos, desplazamiento_x, desplazamiento_
         retorno=True  # Indica que el jugador ha perdido
     return retorno  # El jugador no perdió
 
-def limpiar_tablero(estados, matriz):
+def limpiar_tablero(estados, matriz, banderas):
     for i in range (len(matriz)):
         for j in range(len(matriz[0])):
-            estados[(i,j)]=False
+            estados[(i,j)] = False
+            banderas[(i,j)] = False
+
+
+
+
+def mostrar_niveles(pantalla,imagen_fondo):
+    pantalla.blit(imagen_fondo, (0, 0))
+
+    pygame.draw.rect(pantalla, (75, 83, 32), boton_facil)
+    pygame.draw.rect(pantalla, (75, 83, 32), boton_medio)  
+    pygame.draw.rect(pantalla, (75, 83, 32), boton_dificil)   
+
+    pantalla.blit(texto_boton_Facil, (boton_facil.x + 60, boton_facil.y + 10))
+    pantalla.blit(texto_boton_medio, (boton_medio.x + 53, boton_medio.y + 10))
+    pantalla.blit(texto_boton_Dificil, (boton_dificil.x + 30, boton_dificil.y + 10))
+
+    pygame.display.update()
+
+
+def dibujar_boton_reiniciar(pantalla, imagen_boton, x, y):
+    boton_reiniciar = pygame.Rect(x, y, imagen_boton.get_width(), imagen_boton.get_height())
+    pantalla.blit(imagen_reiniciar, (boton_reiniciar.x, boton_reiniciar.y))
+    return boton_reiniciar
+
+
+
+def reiniciar_partida(tablero, estados, banderas, matriz_completa):
+    tablero = crear_matriz_buscaminas(8, 8, 10)
+    estados = crear_diccionario_estados(8, 8)
+    banderas = crear_diccionario_banderas(8, 8)
+    matriz_completa = matriz_minas_contiguas(8, 8, tablero)
+    print("Partida reiniciada.")
+    return tablero, estados, banderas, matriz_completa

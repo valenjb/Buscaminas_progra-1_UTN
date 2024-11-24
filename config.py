@@ -50,6 +50,9 @@ imagen_bandera = pygame.transform.scale(imagen_bandera, (50, 50))
 imagen_fondo = pygame.image.load("img/fondo_menu.jpg")
 imagen_fondo = pygame.transform.scale(imagen_fondo, (RESOLUCION_PANTALLA))
 
+imagen_reiniciar = pygame.image.load("img/boton_reinicio.png")
+imagen_reiniciar = pygame.transform.scale(imagen_reiniciar, (100, 100))
+
 #--------------------------- BOTONES  --------------------------------------------------
 
 boton_ancho = 200
