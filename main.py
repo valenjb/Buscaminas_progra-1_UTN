@@ -15,7 +15,8 @@ pygame.mixer.music.set_volume(0.1)
 contador = 0
 corriendo = True
 mostrar_inicio = True                                                                      # Diccionario para las banderas
-
+mostrar_nivel=False
+jugar=False
 while corriendo:
     if mostrar_inicio:
         pantalla_inicio(pantalla, font_inicio)
@@ -24,16 +25,31 @@ while corriendo:
                 corriendo = False
             elif event.type == pygame.MOUSEBUTTONDOWN  and event.button == 1:
                 if boton_jugar.collidepoint(event.pos):
+                    jugar=True
                     mostrar_inicio = False
                     tablero = crear_matriz_buscaminas(8,8,10)
                     estados = crear_diccionario_estados(8,8)
                     banderas = crear_diccionario_banderas(8,8)
                     matriz_completa = matriz_minas_contiguas(8,8, tablero)
+                    
 
                     evento=event.pos
+                elif boton_nivel.collidepoint(event.pos):
+                    mostrar_inicio=False
+                    mostrar_nivel=True
                 elif boton_salir.collidepoint(event.pos):
                     corriendo = False
-    else:
+    if mostrar_nivel==True:
+        pantalla.blit(imagen_fondo, (0, 0))
+        # Dibujar botones
+        pygame.draw.rect(pantalla, (75, 83, 32), boton_facil)
+        pygame.draw.rect(pantalla, (75, 83, 32), boton_medio)  
+        pygame.draw.rect(pantalla, (75, 83, 32), boton_dificil)   
+        pantalla.blit(texto_boton_Facil, (boton_facil.x + 60, boton_facil.y + 10))
+        pantalla.blit(texto_boton_medio, (boton_medio.x + 53, boton_medio.y + 10))
+        pantalla.blit(texto_boton_Dificil, (boton_dificil.x + 30, boton_dificil.y + 10))
+        pygame.display.update()
+    elif jugar==True:
         pantalla.fill(COLOR_TABLERO)
         margen = 2
         desplazamiento_x = (PANTALLA_ANCHO - len(matriz_completa[0]) * (50 + margen)) // 2

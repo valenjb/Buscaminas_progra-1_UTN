@@ -67,3 +67,21 @@ texto_boton_jugar=font_inicio.render("Jugar",True,(255,255,255))
 texto_boton_puntajes=font_inicio.render("Puntajes",True,(255,255,255))
 
 texto_boton_salir=font_inicio.render("Salir",True,(255,255,255))
+
+
+
+
+
+
+
+boton_facil = pygame.Rect(200, 300, boton_ancho, boton_alto)
+boton_medio = pygame.Rect(200, 375, boton_ancho, boton_alto)
+boton_dificil = pygame.Rect(200, 450, boton_ancho, boton_alto)
+
+
+
+texto_boton_Facil=font_inicio.render("Facil",True,(255,255,255))
+
+texto_boton_medio=font_inicio.render("Medio",True,(255,255,255))
+
+texto_boton_Dificil=font_inicio.render("Dificil",True,(255,255,255))
