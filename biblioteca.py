@@ -5,14 +5,24 @@ from config import *
 #-----------------------------  PANTALLA  ------------------------------------------------------
 
 
-def pantalla_inicio(pantalla,font_inicio):
-    pantalla.fill((0, 0, 0))
-    dibujar_texto("BUSCAMINA",font_inicio,(255,255,255),PANTALLA_ANCHO/2-100,PANTALLA_ALTO/2-100)
-    pygame.draw.rect(pantalla,(255, 255, 0),boton_jugar)
-    pygame.draw.rect(pantalla,(255, 0, 0),boton_salir)
-    pantalla.blit(texto_boton_jugar,(boton_jugar.x+50,boton_jugar.y+10))
-    pantalla.blit(texto_boton_salir,(boton_salir.x+50,boton_salir.y+10))
+def pantalla_inicio(pantalla, font_inicio):
+    pantalla.blit(imagen_fondo, (0, 0))
+
+    # Crear texto con gradiente
+    texto_gradiente = texto_con_gradiente("BUSCAMINA", font_inicio, (255, 0, 0), (0, 0, 0), PANTALLA_ANCHO, PANTALLA_ALTO)
+    pantalla.blit(texto_gradiente, (PANTALLA_ANCHO / 2 - texto_gradiente.get_width() // 2, PANTALLA_ALTO / 2 - 180))
+
+    # Dibujar botones
+    pygame.draw.rect(pantalla, (75, 83, 32), boton_nivel)
+    pygame.draw.rect(pantalla, (75, 83, 32), boton_jugar)  
+    pygame.draw.rect(pantalla, (75, 83, 32), boton_puntajes)
+    pygame.draw.rect(pantalla, (115, 18, 18), boton_salir)   
+    pantalla.blit(texto_boton_nivel, (boton_nivel.x + 60, boton_nivel.y + 10))
+    pantalla.blit(texto_boton_jugar, (boton_jugar.x + 53, boton_jugar.y + 10))
+    pantalla.blit(texto_boton_puntajes, (boton_puntajes.x + 30, boton_puntajes.y + 10))
+    pantalla.blit(texto_boton_salir, (boton_salir.x + 58, boton_salir.y + 10))
     pygame.display.update()
+
 
 def dibujar_texto(texto,fuente,color,x,y):
     img=fuente.render(texto,True,color)
@@ -174,3 +184,28 @@ def redibujar_bandera(banderas,desplazamiento_x,desplazamiento_y,eventpos):
             x = desplazamiento_x + columna * 50
             y = desplazamiento_y + fila * 50
             pantalla.blit(imagen_bandera, (x, y))
+
+
+def texto_con_gradiente(texto, fuente, color_inicio, color_fin, ancho, alto):
+    # Renderizar texto en blanco para tomar las dimensiones
+    texto_superficie = fuente.render(texto, True, (255, 255, 255))
+    texto_rect = texto_superficie.get_rect(center=(ancho // 2, alto // 2))
+    
+    # Crear superficie para el texto
+    superficie = pygame.Surface((texto_rect.width, texto_rect.height), pygame.SRCALPHA)
+    
+    # Crear gradiente
+    for i in range(texto_rect.height):
+        # Interpolación lineal entre color_inicio y color_fin
+        factor = i / texto_rect.height
+        color_actual = (
+            int(color_inicio[0] + factor * (color_fin[0] - color_inicio[0])),
+            int(color_inicio[1] + factor * (color_fin[1] - color_inicio[1])),
+            int(color_inicio[2] + factor * (color_fin[2] - color_inicio[2]))
+        )
+        pygame.draw.line(superficie, color_actual, (0, i), (texto_rect.width, i))
+    
+    # Combinar texto y gradiente (multiplicación alfa)
+    superficie.blit(texto_superficie, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+    
+    return superficie
