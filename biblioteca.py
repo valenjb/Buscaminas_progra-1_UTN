@@ -90,18 +90,6 @@ def matriz_minas_contiguas(cant_filas:int, cant_column:int, matriz:list)->list:
     return matriz
 
 
-# """ FUNCION PARA CUADRADOS (AGREGAR FLAG)"""
-# def crear_cuadrados_tablero(matriz,tablero,pantalla):
-#         for fila in range(len(tablero)):
-#             for columna in range(len(tablero[0])):
-#                 desplazamiento_x = (PANTALLA_ANCHO - len(matriz) * 50) // 2
-#                 desplazamiento_y = (PANTALLA_ALTO - len(matriz) * 50) // 2
-#                 x = desplazamiento_x + columna * 50  # Desplazamiento en el eje X
-#                 y = desplazamiento_y + fila * 50
-#                 pantalla.blit(imagen_cuadrado, (x, y)) 
-
-
-
 def test_matriz(matriz:list):
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
@@ -142,8 +130,26 @@ def crear_rectangulos(matriz, estados, pantalla:pygame.Surface, desplazamiento_x
                 pygame.draw.rect(pantalla, COLOR_TABLERO, (x, y, 50, 50))
             else:  # Si es un número y se lo descubre
                 numero = matriz[i][j]
-                texto = font_inicio.render(str(numero), True, (0, 0, 0))
-                pantalla.blit(texto, (x + 17, y + 10)) #el +15 y +10 es para centrar el numero y que quede mejor
+                match numero:
+                    case 1:
+                        color = (0, 0, 255)  # Azul
+                    case 2:
+                        color = (0, 128, 0)  # Verde
+                    case 3:
+                        color = (255, 0, 0)  # Rojo
+                    case 4:
+                        color = (0, 0, 128)  # Azul oscuro
+                    case 5:
+                        color = (128, 0, 0)  # Rojo oscuro
+                    case 6:
+                        color = (0, 128, 128)  # Verde azulado
+                    case 7:
+                        color = (75, 41, 41)  # Negro
+                    case 8:
+                        color = (0, 0, 0)  # Gris
+
+                texto = font_inicio.render(str(numero), True, color)
+                pantalla.blit(texto, (x + 17, y + 10)) #el +17 y +10 es para centrar el numero y que quede mejor
 
             pygame.draw.line(pantalla, (0, 0, 0), (x, y), (x + 50, y), margen)  # Línea arriba
             pygame.draw.line(pantalla, (0, 0, 0), (x, y), (x, y + 50), margen)  # Línea izq
@@ -217,3 +223,14 @@ def texto_con_gradiente(texto, fuente, color_inicio, color_fin, ancho, alto):
     superficie.blit(texto_superficie, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
     
     return superficie
+
+
+def manejar_perdida(matriz, estados, eventpos, desplazamiento_x, desplazamiento_y):
+    mouse_x, mouse_y = eventpos
+    fila = (mouse_y - desplazamiento_y) // 50
+    columna = (mouse_x - desplazamiento_x) // 50
+    retorno=False
+    if (fila, columna) in estados and matriz[fila][columna] == -1:
+        print("¡Hiciste clic en una mina! Fin del juego.")
+        retorno=True  # Indica que el jugador ha perdido
+    return retorno  # El jugador no perdió

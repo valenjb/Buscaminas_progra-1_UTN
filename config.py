@@ -41,7 +41,7 @@ icono=pygame.image.load("img/logo_app.png")
 imagen_cuadrado=pygame.image.load("img/CUADRADO_BUSCAMINA.jpg")
 imagen_cuadrado=pygame.transform.scale(imagen_cuadrado,(50,50))
 
-imagen_mina = pygame.image.load("img/bomba.png")
+imagen_mina = pygame.image.load("img/mina.png")
 imagen_mina = pygame.transform.scale(imagen_mina, (50, 50))
 
 imagen_bandera = pygame.image.load("img/bandera.png")
