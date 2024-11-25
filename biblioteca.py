@@ -288,3 +288,4 @@ def descubrir_area(matriz, estados, fila, columna,banderas):
     descubrir_area(matriz, estados, fila - 1, columna + 1,banderas)  # Arriba-Derecha
     descubrir_area(matriz, estados, fila + 1, columna - 1,banderas)  # Abajo-Izquierda
     descubrir_area(matriz, estados, fila + 1, columna + 1,banderas)  # Abajo-Derecha
+    
