@@ -18,6 +18,7 @@ mostrar_inicio = True                                                           
 mostrar_nivel=False
 jugar=False
 sonido_mutado = False
+mensaje_perder_mostrado = False
 
 while corriendo:
     if mostrar_inicio:
@@ -68,19 +69,17 @@ while corriendo:
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = event.pos
                 if boton_reiniciar.collidepoint(event.pos):
-                    tablero, estados, banderas, matriz_completa = reiniciar_partida(tablero, estados, banderas, matriz_completa)
-                if manejar_perdida(matriz_completa, estados, pos, desplazamiento_x, desplazamiento_y, banderas):
+                    tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado = reiniciar_partida(tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado)
+                if manejar_perdida(matriz_completa, estados, pos, desplazamiento_x, desplazamiento_y, banderas) and mensaje_perder_mostrado == False:
+                    print("¡Hiciste clic en una mina! \n Fin del juego.")
+                    mensaje_perder_mostrado = True
                     limpiar_tablero(estados, matriz_completa, banderas)
                 else:
                     descubre_casillero(estados, banderas, pos, desplazamiento_x, desplazamiento_y,matriz_completa)
-
 
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                 pos = event.pos
                 poner_sacar_banderas(estados, banderas, pos, desplazamiento_x, desplazamiento_y)
 
     pygame.display.flip()
-
-
-
 pygame.quit()

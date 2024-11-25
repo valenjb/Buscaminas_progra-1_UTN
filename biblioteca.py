@@ -223,9 +223,8 @@ def manejar_perdida(matriz, estados, eventpos, desplazamiento_x, desplazamiento_
     columna = (mouse_x - desplazamiento_x) // 50
     retorno=False
     if (fila, columna) in estados and matriz[fila][columna] == -1 and banderas[(fila,columna)]== False:
-        print("¡Hiciste clic en una mina! Fin del juego.")
-        retorno=True  # Indica que el jugador ha perdido
-    return retorno  # El jugador no perdió
+        retorno=True  # pierde
+    return retorno  # no perdio
 
 def limpiar_tablero(estados, matriz, banderas):
     for i in range (len(matriz)):
@@ -256,13 +255,14 @@ def dibujar_boton_reiniciar(pantalla, imagen_boton, x, y):
 
 
 
-def reiniciar_partida(tablero, estados, banderas, matriz_completa):
+def reiniciar_partida(tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado):
     tablero = crear_matriz_buscaminas(8, 8, 10)
     estados = crear_diccionario_estados(8, 8)
     banderas = crear_diccionario_banderas(8, 8)
     matriz_completa = matriz_minas_contiguas(8, 8, tablero)
+    mensaje_perder_mostrado = False
     print("Partida reiniciada.")
-    return tablero, estados, banderas, matriz_completa
+    return tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado
 
 def descubrir_area(matriz, estados, fila, columna,banderas):
     # Condiciones base
