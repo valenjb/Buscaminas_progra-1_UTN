@@ -303,3 +303,18 @@ def dibujar_boton_sonido(sonido_mutado, imagen_unmute, imagen_mute, boton_mute):
         pantalla.blit(imagen_mute, boton_mute)
     else:
         pantalla.blit(imagen_unmute, boton_mute)
+
+
+
+def verificar_victoria(matriz, estados):
+    ganar = 54
+    contador_espacios_descubiertos = 0
+    victoria=False
+
+    for i in range (len(matriz)):
+        for j in range(len(matriz[i])):
+            if estados[(i,j)] == False:
+                contador_espacios_descubiertos += 1
+    if contador_espacios_descubiertos == ganar:
+        victoria = True
+    return victoria

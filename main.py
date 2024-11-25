@@ -19,6 +19,7 @@ mostrar_nivel=False
 jugar=False
 sonido_mutado = False
 mensaje_perder_mostrado = False
+ganaste = False
 
 while corriendo:
     if mostrar_inicio:
@@ -80,6 +81,10 @@ while corriendo:
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                 pos = event.pos
                 poner_sacar_banderas(estados, banderas, pos, desplazamiento_x, desplazamiento_y)
+
+        if verificar_victoria(matriz_completa, estados) and ganaste == False:
+            print("Ganaste lindo")
+            ganaste = True
 
     pygame.display.flip()
 pygame.quit()
