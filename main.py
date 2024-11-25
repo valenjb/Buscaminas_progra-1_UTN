@@ -68,7 +68,7 @@ while corriendo:
                 if manejar_perdida(matriz_completa, estados, pos, desplazamiento_x, desplazamiento_y):
                     limpiar_tablero(estados, matriz_completa, banderas)
                 else:
-                    descubre_casillero(estados, banderas, pos, desplazamiento_x, desplazamiento_y)
+                    descubre_casillero(estados, banderas, pos, desplazamiento_x, desplazamiento_y,matriz_completa)
 
 
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
