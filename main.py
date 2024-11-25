@@ -10,21 +10,25 @@ pygame.display.set_icon(icono)
 
 #AUDIO
 pygame.mixer.music.play(-1)
-pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.set_volume(0.2)
 
 contador = 0
 corriendo = True
 mostrar_inicio = True                                                                      # Diccionario para las banderas
 mostrar_nivel=False
 jugar=False
+sonido_mutado = False
 
 while corriendo:
     if mostrar_inicio:
-        pantalla_inicio(pantalla, font_inicio)
+        pantalla_inicio(sonido_mutado, pantalla, font_inicio)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 corriendo = False
-            elif event.type == pygame.MOUSEBUTTONDOWN  and event.button == 1:
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if boton_mute.collidepoint(event.pos):
+                    sonido_mutado = cambiar_estado_sonido(sonido_mutado)
+
                 if boton_jugar.collidepoint(event.pos):
                     jugar=True
                     mostrar_inicio = False

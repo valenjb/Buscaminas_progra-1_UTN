@@ -38,6 +38,11 @@ font_inicio=pygame.font.Font("font/mifuente.otf",24)
 
 icono=pygame.image.load("img/logo_app.png")
 
+imagen_mute = pygame.image.load("img/muteado.png")
+imagen_mute = pygame.transform.scale(imagen_mute, (60, 60))
+imagen_unmute = pygame.image.load("img/sonido.png")
+imagen_unmute = pygame.transform.scale(imagen_unmute, (60, 60))
+
 imagen_cuadrado=pygame.image.load("img/CUADRADO_BUSCAMINA.jpg")
 imagen_cuadrado=pygame.transform.scale(imagen_cuadrado,(50,50))
 
@@ -58,6 +63,8 @@ imagen_reiniciar = pygame.transform.scale(imagen_reiniciar, (100, 100))
 boton_ancho = 200
 boton_alto = 50
 
+boton_mute = pygame.Rect(500, 40, 50, 50)
+
 boton_nivel = pygame.Rect(200, 300, boton_ancho, boton_alto)
 boton_jugar = pygame.Rect(200, 375, boton_ancho, boton_alto)
 boton_puntajes = pygame.Rect(200, 450, boton_ancho, boton_alto)
@@ -72,15 +79,9 @@ texto_boton_puntajes=font_inicio.render("Puntajes",True,(255,255,255))
 texto_boton_salir=font_inicio.render("Salir",True,(255,255,255))
 
 
-
-
-
-
-
 boton_facil = pygame.Rect(200, 300, boton_ancho, boton_alto)
 boton_medio = pygame.Rect(200, 375, boton_ancho, boton_alto)
 boton_dificil = pygame.Rect(200, 450, boton_ancho, boton_alto)
-
 
 
 texto_boton_Facil=font_inicio.render("Facil",True,(255,255,255))

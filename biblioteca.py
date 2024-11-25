@@ -5,9 +5,9 @@ from config import *
 #-----------------------------  PANTALLA  ------------------------------------------------------
 
 
-def pantalla_inicio(pantalla, font_inicio):
+def pantalla_inicio(sonido_mutado, pantalla, font_inicio):
     pantalla.blit(imagen_fondo, (0, 0))
-
+    dibujar_boton_sonido(sonido_mutado, imagen_unmute, imagen_mute, boton_mute)
     # Crear texto con gradiente
     texto_gradiente = texto_con_gradiente("BUSCAMINAS", font_inicio, (255, 0, 0), (0, 0, 0), PANTALLA_ANCHO, PANTALLA_ALTO)
     pantalla.blit(texto_gradiente, (PANTALLA_ANCHO / 2 - texto_gradiente.get_width() // 2, PANTALLA_ALTO / 2 - 180))
@@ -288,4 +288,18 @@ def descubrir_area(matriz, estados, fila, columna,banderas):
     descubrir_area(matriz, estados, fila - 1, columna + 1,banderas)  # Arriba-Derecha
     descubrir_area(matriz, estados, fila + 1, columna - 1,banderas)  # Abajo-Izquierda
     descubrir_area(matriz, estados, fila + 1, columna + 1,banderas)  # Abajo-Derecha
-    
+
+
+def cambiar_estado_sonido(sonido_mutado):
+    sonido_mutado = not sonido_mutado
+    if sonido_mutado:
+        pygame.mixer.music.set_volume(0)
+    else:
+        pygame.mixer.music.set_volume(0.1)
+    return sonido_mutado
+
+def dibujar_boton_sonido(sonido_mutado, imagen_unmute, imagen_mute, boton_mute):
+    if sonido_mutado:
+        pantalla.blit(imagen_mute, boton_mute)
+    else:
+        pantalla.blit(imagen_unmute, boton_mute)
