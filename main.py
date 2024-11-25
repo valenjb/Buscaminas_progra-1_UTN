@@ -69,7 +69,7 @@ while corriendo:
                 pos = event.pos
                 if boton_reiniciar.collidepoint(event.pos):
                     tablero, estados, banderas, matriz_completa = reiniciar_partida(tablero, estados, banderas, matriz_completa)
-                if manejar_perdida(matriz_completa, estados, pos, desplazamiento_x, desplazamiento_y):
+                if manejar_perdida(matriz_completa, estados, pos, desplazamiento_x, desplazamiento_y, banderas):
                     limpiar_tablero(estados, matriz_completa, banderas)
                 else:
                     descubre_casillero(estados, banderas, pos, desplazamiento_x, desplazamiento_y,matriz_completa)

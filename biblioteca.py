@@ -217,12 +217,12 @@ def texto_con_gradiente(texto, fuente, color_inicio, color_fin, ancho, alto):
     return superficie
 
 
-def manejar_perdida(matriz, estados, eventpos, desplazamiento_x, desplazamiento_y):
+def manejar_perdida(matriz, estados, eventpos, desplazamiento_x, desplazamiento_y, banderas):
     mouse_x, mouse_y = eventpos
     fila = (mouse_y - desplazamiento_y) // 50
     columna = (mouse_x - desplazamiento_x) // 50
     retorno=False
-    if (fila, columna) in estados and matriz[fila][columna] == -1:
+    if (fila, columna) in estados and matriz[fila][columna] == -1 and banderas[(fila,columna)]== False:
         print("¡Hiciste clic en una mina! Fin del juego.")
         retorno=True  # Indica que el jugador ha perdido
     return retorno  # El jugador no perdió
