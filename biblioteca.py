@@ -1,3 +1,4 @@
+import json
 import pygame
 import random
 from config import *
@@ -21,7 +22,6 @@ def pantalla_inicio(sonido_mutado, pantalla, font_inicio):
     pantalla.blit(texto_boton_jugar, (boton_jugar.x + 53, boton_jugar.y + 10))
     pantalla.blit(texto_boton_puntajes, (boton_puntajes.x + 30, boton_puntajes.y + 10))
     pantalla.blit(texto_boton_salir, (boton_salir.x + 58, boton_salir.y + 10))
-    pygame.display.update()
 
 
 def dibujar_texto(texto,fuente,color,x,y):
@@ -152,16 +152,20 @@ def crear_rectangulos(matriz, estados, pantalla:pygame.Surface, desplazamiento_x
 
 
 
-def descubre_casillero(estados, banderas, eventpos, desplazamiento_x, desplazamiento_y, matriz):
+def descubre_casillero(estados, banderas, eventpos, desplazamiento_x, desplazamiento_y, matriz, puntos):
     mouse_x, mouse_y = eventpos
     fila = (mouse_y - desplazamiento_y) // 50
     columna = (mouse_x - desplazamiento_x) // 50
 
-    if (fila, columna) in estados and banderas[(fila, columna)] == False:  # 
+    if (fila, columna) in estados and banderas[(fila, columna)] == False and estados[(fila, columna)] == True:  # 
         if matriz[fila][columna] == 0:  # Si es un 0, descubre el área
-            descubrir_area(matriz, estados, fila, columna,banderas)
+            puntos=descubrir_area(matriz, estados, fila, columna,banderas,puntos)
+            
         else:  # Si es un número, solo descubre esa celda
             estados[(fila, columna)] = False
+            puntos+=1
+            
+    return puntos
 
 def poner_sacar_banderas(estados,banderas,eventpos,desplazamiento_x,desplazamiento_y):
     mouse_x, mouse_y = eventpos
@@ -245,12 +249,13 @@ def mostrar_niveles(pantalla,imagen_fondo):
     pantalla.blit(texto_boton_medio, (boton_medio.x + 53, boton_medio.y + 10))
     pantalla.blit(texto_boton_Dificil, (boton_dificil.x + 30, boton_dificil.y + 10))
 
-    pygame.display.update()
 
 
 def dibujar_boton_reiniciar(pantalla, imagen_boton, x, y):
     boton_reiniciar = pygame.Rect(x, y, imagen_boton.get_width(), imagen_boton.get_height())
     pantalla.blit(imagen_reiniciar, (boton_reiniciar.x, boton_reiniciar.y))
+    pantalla.blit(texto_boton_reiniciar,(boton_reiniciar.x - 37, boton_reiniciar.y - 50))
+
     return boton_reiniciar
 
 
@@ -265,31 +270,39 @@ def reiniciar_partida(tablero, estados, banderas, matriz_completa, mensaje_perde
     print("Partida reiniciada.")
     return tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado, ganaste
 
-def descubrir_area(matriz, estados, fila, columna,banderas):
-    # Condiciones base
-    if (fila < 0 or fila >= len(matriz) or columna < 0 or columna >= len(matriz[0]) or estados[(fila, columna)] == False):  # Si está fuera de los límites o ya descubierta
-        return
+def descubrir_area(matriz, estados, fila, columna, banderas, puntos):
+    
+    # Condiciones base: Si está fuera de los límites o ya está descubierta
+    if (
+        fila < 0 or fila >= len(matriz) or
+        columna < 0 or columna >= len(matriz[0]) or
+        estados[(fila, columna)] == False or  # Ya descubierta
+        banderas[(fila, columna)] == True     # Tiene una bandera
+    ):
+        return puntos
 
-#Descubre la celda actual
+    # Descubre la celda actual y suma puntos
     estados[(fila, columna)] = False
 
-    if banderas[(fila, columna)]==True:
-        estados[(fila,columna)]=True
+    # Sumar puntos solo si es la primera vez que se descubre
+    puntos += 1
 
-    # Si la celda no es 0, no continúa
-    if matriz[fila][columna] != 0 :
-        return
+    # Si la casilla tiene un número distinto de 0, no continúa
+    
+    if matriz[fila][columna] != 0:
+        return puntos
 
-    # Llama a las celdas adyacentes (8 direcciones)
-    descubrir_area(matriz, estados, fila - 1, columna,banderas)  # Arriba
-    descubrir_area(matriz, estados, fila + 1, columna,banderas)  # Abajo
-    descubrir_area(matriz, estados, fila, columna - 1,banderas)  # Izquierda
-    descubrir_area(matriz, estados, fila, columna + 1,banderas)  # Derecha
-    descubrir_area(matriz, estados, fila - 1, columna - 1,banderas)  # Arriba-Izquierda
-    descubrir_area(matriz, estados, fila - 1, columna + 1,banderas)  # Arriba-Derecha
-    descubrir_area(matriz, estados, fila + 1, columna - 1,banderas)  # Abajo-Izquierda
-    descubrir_area(matriz, estados, fila + 1, columna + 1,banderas)  # Abajo-Derecha
+    # Recursión para las casillas adyacentes (8 direcciones)
+    puntos = descubrir_area(matriz, estados, fila - 1, columna, banderas, puntos)  # Arriba
+    puntos = descubrir_area(matriz, estados, fila + 1, columna, banderas, puntos)  # Abajo
+    puntos = descubrir_area(matriz, estados, fila, columna - 1, banderas, puntos)  # Izquierda
+    puntos = descubrir_area(matriz, estados, fila, columna + 1, banderas, puntos)  # Derecha
+    puntos = descubrir_area(matriz, estados, fila - 1, columna - 1, banderas, puntos)  # Arriba-Izquierda
+    puntos = descubrir_area(matriz, estados, fila - 1, columna + 1, banderas, puntos)  # Arriba-Derecha
+    puntos = descubrir_area(matriz, estados, fila + 1, columna - 1, banderas, puntos)  # Abajo-Izquierda
+    puntos = descubrir_area(matriz, estados, fila + 1, columna + 1, banderas, puntos)  # Abajo-Derecha
 
+    return puntos
 
 def cambiar_estado_sonido(sonido_mutado):
     sonido_mutado = not sonido_mutado
@@ -359,3 +372,106 @@ def dibujar_fondo_tablero(pantalla, matriz_completa, COLOR_TABLERO):
     
     # Dibujar el fondo con el tamaño adecuado
     pygame.draw.rect(pantalla, COLOR_TABLERO, (desplazamiento_x, desplazamiento_y, ancho_tablero, alto_tablero))
+
+
+def mostrar_puntajes(pantalla,imagen_fondo):
+    
+    pantalla.blit(imagen_fondo, (0, 0))
+
+
+def pedir_usuario(pantalla, font, imagen_fondo):
+    nombre = ""
+    ingresar_nombre_usuario = True
+
+    while ingresar_nombre_usuario:
+        
+        pantalla.blit(imagen_fondo, (0,0))
+        texto = font.render("Ingrese su Nickname:", True, (255, 255, 255))
+        pantalla.blit(texto, (150, 300))
+
+        # Mostrar el nombre ingresado
+        nombre_render = font.render(nombre, True, (255, 255, 255))
+        pantalla.blit(nombre_render, (150, 350))
+
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:  # Enter para confirmar
+                    if nombre.strip():  # Asegurarse de que no esté vacío
+                        ingresar_nombre_usuario = False
+                elif event.key == pygame.K_BACKSPACE:  # Borrar última letra
+                    nombre = nombre[:-1]
+                else:
+                    # Agregar caracteres (limitar la longitud del nombre)
+                    if len(nombre) < 20:
+                        nombre += event.unicode
+
+    return nombre
+
+
+
+
+def guardar_puntaje(nombre, puntos):
+    archivo_puntajes = "database/puntajes.json"
+
+    # Cargar los puntajes existentes
+    try:
+        with open(archivo_puntajes, "r") as archivo:
+            puntajes = json.load(archivo)
+    except FileNotFoundError:
+        puntajes = []
+
+    # Verificar si el nombre ya existe
+    nombre_existente = False
+    for registro in puntajes:
+        if registro["nombre"] == nombre:
+            registro["puntaje"] = puntos  # Actualizar el puntaje
+            nombre_existente = True
+            break
+
+    # Si no existe, agregar un nuevo registro
+    if not nombre_existente:
+        puntajes.append({"nombre": nombre, "puntaje": puntos})
+
+    # Guardar los puntajes actualizados
+    with open(archivo_puntajes, "w") as archivo:
+        json.dump(puntajes, archivo, indent=4)
+
+
+
+def mostrar_tablero(pantalla, puntos, fuente, color_rect, color_texto, x, y, ancho, alto):
+    """
+    Dibuja un rectángulo en la pantalla con el puntaje actual y actualiza dinámicamente.
+    
+    Parámetros:
+    - pantalla: Superficie de Pygame donde se dibuja.
+    - puntos: El puntaje actual del jugador.
+    - fuente: Fuente para renderizar el texto.
+    - color_rect: Color del rectángulo (tupla RGB).
+    - color_texto: Color del texto (tupla RGB).
+    - x, y: Coordenadas de la esquina superior izquierda del rectángulo.
+    - ancho, alto: Dimensiones del rectángulo.
+    """
+
+    # Dibujar el rectángulo
+    rectangulo_puntos = pygame.Rect(x, y, ancho, alto)
+    pygame.draw.rect(pantalla, color_rect, rectangulo_puntos)
+
+    # Renderizar el texto del puntaje
+    texto_puntaje = str(puntos)
+    texto_renderizado = fuente.render(texto_puntaje, True, color_texto)
+
+    # Centrar el texto en el rectángulo
+    texto_rect = texto_renderizado.get_rect(center=rectangulo_puntos.center)
+    pantalla.blit(texto_renderizado, texto_rect)
+
+
+
+def dibujar_boton_timer(pantalla, boton_timer, texto_boton_timer):
+    pygame.draw.rect(pantalla, (75, 83, 32), boton_timer)
+    texto_rect = texto_boton_timer.get_rect(center = boton_timer.center)
+    pantalla.blit(texto_boton_timer, texto_rect)

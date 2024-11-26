@@ -30,6 +30,7 @@ COLOR_TABLERO = (169, 169, 169)
 pygame.font.init()
 
 font_inicio=pygame.font.Font("font/mifuente.otf",24)
+font_timer = pygame.font.Font("font/mifuente.otf",36)
 
 
 #---------------------------  IMAGENES  -------------------------------------------------
@@ -56,8 +57,11 @@ imagen_fondo = pygame.transform.scale(imagen_fondo, (RESOLUCION_PANTALLA))
 imagen_fondo_juego = pygame.image.load("img/fondo_juego.jpg")
 imagen_fondo_juego = pygame.transform.scale(imagen_fondo_juego, (RESOLUCION_PANTALLA))
 
+imagen_fondo_puntajes = pygame.image.load("img/fondo_puntajes.jpg")
+imagen_fondo_puntajes = pygame.transform.scale(imagen_fondo_puntajes, (RESOLUCION_PANTALLA))
+
 imagen_reiniciar = pygame.image.load("img/boton_reinicio.png")
-imagen_reiniciar = pygame.transform.scale(imagen_reiniciar, (100, 100))
+imagen_reiniciar = pygame.transform.scale(imagen_reiniciar, (75, 75))
 
 #--------------------------- BOTONES  --------------------------------------------------
 
@@ -74,6 +78,8 @@ boton_salir = pygame.Rect(200, 525, boton_ancho, boton_alto)
 boton_facil = pygame.Rect(200, 300, boton_ancho, boton_alto)
 boton_medio = pygame.Rect(200, 375, boton_ancho, boton_alto)
 boton_dificil = pygame.Rect(200, 450, boton_ancho, boton_alto)
+boton_reiniciar = pygame.Rect(263,650, boton_ancho, boton_alto )
+boton_timer = pygame.Rect(300, 125, boton_ancho, boton_alto)
 
 boton_volver = pygame.Rect(25, 25, 150, 40)
 
@@ -83,6 +89,7 @@ texto_boton_nivel=font_inicio.render("Nivel",True,(255,255,255))
 texto_boton_jugar=font_inicio.render("Jugar",True,(255,255,255))
 texto_boton_puntajes=font_inicio.render("Puntajes",True,(255,255,255))
 texto_boton_salir=font_inicio.render("Salir",True,(255,255,255))
+texto_boton_reiniciar=font_inicio.render("Reiniciar", True,(255,255,255))
 
 texto_boton_Facil=font_inicio.render("Facil",True,(255,255,255))
 texto_boton_medio=font_inicio.render("Medio",True,(255,255,255))
