@@ -418,7 +418,7 @@ def mostrar_puntos_tablero(pantalla, puntos, fuente, color_rect, color_texto, x,
     rectangulo_puntos = pygame.Rect(x, y, ancho, alto)
     pygame.draw.rect(pantalla, color_rect, rectangulo_puntos)
 
-    texto_puntaje = str(puntos)
+    texto_puntaje = str(f"{puntos:04}")
     texto_renderizado = fuente.render(texto_puntaje, True, color_texto)
 
     texto_rect = texto_renderizado.get_rect(center=rectangulo_puntos.center)
