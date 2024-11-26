@@ -3,10 +3,21 @@ from biblioteca import *
 from config import *
 import random
 import json
-
+pygame.init()
 #NOMBRE DE ARCHIVO E ICONO
 pygame.display.set_caption("BUSCAMINAS")
 pygame.display.set_icon(icono)
+
+
+
+mi_evento=pygame.USEREVENT + 1
+un_segundo=1000
+pygame.time.set_timer(mi_evento,un_segundo)
+contador_segundos=0
+mi_texto=font_inicio.render(f"Time:{contador_segundos}",True,"red")
+
+
+
 
 #AUDIO
 pygame.mixer.music.play(-1)
@@ -25,6 +36,7 @@ while corriendo:
     if mostrar_inicio:
         pantalla_inicio(sonido_mutado, pantalla, font_inicio)
         for event in pygame.event.get():
+            
             if event.type == pygame.QUIT:
                 corriendo = False
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -52,10 +64,19 @@ while corriendo:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 corriendo = False
+    
+    elif jugar == True :
+        for event in pygame.event.get():
+            if event.type==mi_evento and mensaje_perder_mostrado==False:
+                mi_texto=font_inicio.render(f"Time:{contador_segundos}",True,"red")
+            
+                contador_segundos+=1
+                #contador=contador_segundos
+                
+            
 
-
-    elif jugar == True:
         pantalla.fill(COLOR_TABLERO)
+        
         margen = 2
         desplazamiento_x = (PANTALLA_ANCHO - len(matriz_completa[0]) * (50 + margen)) // 2
         desplazamiento_y = (PANTALLA_ALTO - len(matriz_completa) * (50 + margen)) // 2
@@ -70,11 +91,14 @@ while corriendo:
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = event.pos
                 if boton_reiniciar.collidepoint(event.pos):
+                    contador_segundos=0
                     tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado = reiniciar_partida(tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado)
+
                 if manejar_perdida(matriz_completa, estados, pos, desplazamiento_x, desplazamiento_y, banderas) and mensaje_perder_mostrado == False:
                     print("¡Hiciste clic en una mina! \n Fin del juego.")
                     mensaje_perder_mostrado = True
                     limpiar_tablero(estados, matriz_completa, banderas)
+                    
                 else:
                     descubre_casillero(estados, banderas, pos, desplazamiento_x, desplazamiento_y,matriz_completa)
 
@@ -85,6 +109,6 @@ while corriendo:
         if verificar_victoria(matriz_completa, estados) and ganaste == False:
             print("Ganaste lindo")
             ganaste = True
-
+        pantalla.blit(mi_texto,(400,50))
     pygame.display.flip()
 pygame.quit()
