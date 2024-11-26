@@ -89,6 +89,7 @@ texto_boton_nivel=font_inicio.render("Nivel",True,(255,255,255))
 texto_boton_jugar=font_inicio.render("Jugar",True,(255,255,255))
 texto_boton_puntajes=font_inicio.render("Puntajes",True,(255,255,255))
 texto_boton_salir=font_inicio.render("Salir",True,(255,255,255))
+
 texto_boton_reiniciar=font_inicio.render("Reiniciar", True,(255,255,255))
 
 texto_boton_Facil=font_inicio.render("Facil",True,(255,255,255))

@@ -68,10 +68,10 @@ def crear_matriz_buscaminas(cant_filas:int, cant_colum:int, minas:int)->list:
 def descrubir_minas_contiguas(cant_filas:int, cant_colum:int, matriz:list)->int:
     minas=0
 
-    for i in range(cant_filas-1,cant_filas+2):#Pongo -1 y +2 para recorrer las diagonales y los costado
+    for i in range(cant_filas-1,cant_filas+2):                                              #Pongo -1 y +2 para recorrer las diagonales y los costado
         for j in range(cant_colum-1,cant_colum+2):
-            if i >=0 and i<len(matriz): #verifico que este dentro de las dimensiones de la matriz
-                if (j >=0 and j<len(matriz[0]))and (i!=cant_filas or j != cant_colum):#Lo mismo aca,despues para que no recorra el mismo elemento.
+            if i >=0 and i<len(matriz):                                                     #verifico que este dentro de las dimensiones de la matriz
+                if (j >=0 and j<len(matriz[0]))and (i!=cant_filas or j != cant_colum):      #Lo mismo aca,despues para que no recorra el mismo elemento.
                     if matriz[i][j]==-1:
                         minas+=1
     return minas
@@ -81,12 +81,9 @@ def matriz_minas_contiguas(cant_filas:int, cant_column:int, matriz:list)->list:
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
             if matriz[i][j]==0:
-                pistas=descrubir_minas_contiguas(i,j,matriz)  #Mando la posicion de la matriz a fijar si tiene minas contiguas
+                pistas=descrubir_minas_contiguas(i,j,matriz)                                #Mando la posicion de la matriz a fijar si tiene minas contiguas
                 if pistas > 0:
                     matriz[i][j]=pistas
-
-                elif pistas==0:
-                    pass#libera cuadrados de alrededor      FALTA  REVISAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     return matriz
 
 
@@ -97,17 +94,19 @@ def test_matriz(matriz:list):
         print("")
 
 
-
 def crear_diccionario_estados(cant_filas: int, cant_colum: int) -> dict:
-    return {(fila, col): True 
-            for fila in range(cant_filas) 
-            for col in range(cant_colum)}
+    estados = {}
+    for fila in range(cant_filas):
+        for col in range(cant_colum):
+            estados[(fila, col)] = True
+    return estados
 
 def crear_diccionario_banderas(cant_filas: int, cant_colum: int) -> dict:
-    return {(fila, col): False
-            for fila in range(cant_filas) 
-            for col in range(cant_colum)}
-
+    banderas = {}
+    for fila in range(cant_filas):
+        for col in range(cant_colum):
+            banderas[(fila, col)] = False
+    return banderas
 
 
 def crear_rectangulos(matriz, estados, pantalla:pygame.Surface, desplazamiento_x, desplazamiento_y, margen=2):
@@ -174,14 +173,10 @@ def poner_sacar_banderas(estados,banderas,eventpos,desplazamiento_x,desplazamien
     fila = (mouse_y - desplazamiento_y) // 50
     columna = (mouse_x - desplazamiento_x) // 50
     if (fila, columna) in estados and estados[(fila, columna)] == True: 
-                    #print(fila,"---------",columna,"------------",banderas) # Revisa si estás en un casillero y si este está tapado
-                    if banderas[(fila, columna)] == False:                              # Si la posicion no está en la misma posicion de una bandera, pone una bandera
-                        banderas[(fila, columna)] = True
-                        #print(banderas)  
-                    else:                                                            # Si ya tiene bandera, saca la bandera
-                        banderas[(fila, columna)]=False
-                        #print(banderas)
-    
+        if banderas[(fila, columna)] == False:                              # Si la posicion no está en la misma posicion de una bandera, pone una bandera
+            banderas[(fila, columna)] = True
+        else:                                                            # Si ya tiene bandera, saca la bandera
+            banderas[(fila, columna)]=False
 
 
 def redibujar_bandera(banderas,desplazamiento_x,desplazamiento_y,eventpos):
@@ -271,28 +266,14 @@ def reiniciar_partida(tablero, estados, banderas, matriz_completa, mensaje_perde
     return tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado, ganaste
 
 def descubrir_area(matriz, estados, fila, columna, banderas, puntos):
-    
-    # Condiciones base: Si está fuera de los límites o ya está descubierta
-    if (
-        fila < 0 or fila >= len(matriz) or
-        columna < 0 or columna >= len(matriz[0]) or
-        estados[(fila, columna)] == False or  # Ya descubierta
-        banderas[(fila, columna)] == True     # Tiene una bandera
-    ):
+    if (fila < 0 or fila >= len(matriz) or columna < 0 or columna >= len(matriz[0]) or estados[(fila, columna)] == False or  banderas[(fila, columna)] == True):
         return puntos
-
-    # Descubre la celda actual y suma puntos
-    estados[(fila, columna)] = False
-
-    # Sumar puntos solo si es la primera vez que se descubre
-    puntos += 1
-
-    # Si la casilla tiene un número distinto de 0, no continúa
     
+    estados[(fila, columna)] = False
+    puntos += 1
     if matriz[fila][columna] != 0:
         return puntos
 
-    # Recursión para las casillas adyacentes (8 direcciones)
     puntos = descubrir_area(matriz, estados, fila - 1, columna, banderas, puntos)  # Arriba
     puntos = descubrir_area(matriz, estados, fila + 1, columna, banderas, puntos)  # Abajo
     puntos = descubrir_area(matriz, estados, fila, columna - 1, banderas, puntos)  # Izquierda
@@ -301,7 +282,6 @@ def descubrir_area(matriz, estados, fila, columna, banderas, puntos):
     puntos = descubrir_area(matriz, estados, fila - 1, columna + 1, banderas, puntos)  # Arriba-Derecha
     puntos = descubrir_area(matriz, estados, fila + 1, columna - 1, banderas, puntos)  # Abajo-Izquierda
     puntos = descubrir_area(matriz, estados, fila + 1, columna + 1, banderas, puntos)  # Abajo-Derecha
-
     return puntos
 
 def cambiar_estado_sonido(sonido_mutado):
@@ -384,7 +364,6 @@ def pedir_usuario(pantalla, font, imagen_fondo):
     ingresar_nombre_usuario = True
 
     while ingresar_nombre_usuario:
-        
         pantalla.blit(imagen_fondo, (0,0))
         texto = font.render("Ingrese su Nickname:", True, (255, 255, 255))
         pantalla.blit(texto, (150, 300))
@@ -400,75 +379,50 @@ def pedir_usuario(pantalla, font, imagen_fondo):
                 pygame.quit()
                 exit()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:  # Enter para confirmar
-                    if nombre.strip():  # Asegurarse de que no esté vacío
+                if event.key == pygame.K_RETURN:
+                    if nombre.strip():
                         ingresar_nombre_usuario = False
-                elif event.key == pygame.K_BACKSPACE:  # Borrar última letra
+                elif event.key == pygame.K_BACKSPACE:
                     nombre = nombre[:-1]
                 else:
-                    # Agregar caracteres (limitar la longitud del nombre)
                     if len(nombre) < 20:
                         nombre += event.unicode
-
     return nombre
-
-
 
 
 def guardar_puntaje(nombre, puntos):
     archivo_puntajes = "database/puntajes.json"
 
-    # Cargar los puntajes existentes
     try:
         with open(archivo_puntajes, "r") as archivo:
             puntajes = json.load(archivo)
     except FileNotFoundError:
         puntajes = []
 
-    # Verificar si el nombre ya existe
     nombre_existente = False
     for registro in puntajes:
-        if registro["nombre"] == nombre:
-            registro["puntaje"] = puntos  # Actualizar el puntaje
+        if registro["nombre"] == nombre:        #FALTA ARREGLAR SI ES MENOR EL PUNTAJE 
+            registro["puntaje"] = puntos
             nombre_existente = True
             break
 
-    # Si no existe, agregar un nuevo registro
-    if not nombre_existente:
+    if nombre_existente == False:
         puntajes.append({"nombre": nombre, "puntaje": puntos})
 
-    # Guardar los puntajes actualizados
     with open(archivo_puntajes, "w") as archivo:
         json.dump(puntajes, archivo, indent=4)
 
 
 
-def mostrar_tablero(pantalla, puntos, fuente, color_rect, color_texto, x, y, ancho, alto):
-    """
-    Dibuja un rectángulo en la pantalla con el puntaje actual y actualiza dinámicamente.
-    
-    Parámetros:
-    - pantalla: Superficie de Pygame donde se dibuja.
-    - puntos: El puntaje actual del jugador.
-    - fuente: Fuente para renderizar el texto.
-    - color_rect: Color del rectángulo (tupla RGB).
-    - color_texto: Color del texto (tupla RGB).
-    - x, y: Coordenadas de la esquina superior izquierda del rectángulo.
-    - ancho, alto: Dimensiones del rectángulo.
-    """
-
-    # Dibujar el rectángulo
+def mostrar_puntos_tablero(pantalla, puntos, fuente, color_rect, color_texto, x, y, ancho, alto):
     rectangulo_puntos = pygame.Rect(x, y, ancho, alto)
     pygame.draw.rect(pantalla, color_rect, rectangulo_puntos)
 
-    # Renderizar el texto del puntaje
     texto_puntaje = str(puntos)
     texto_renderizado = fuente.render(texto_puntaje, True, color_texto)
 
-    # Centrar el texto en el rectángulo
     texto_rect = texto_renderizado.get_rect(center=rectangulo_puntos.center)
     pantalla.blit(texto_renderizado, texto_rect)
-
 
 
 def dibujar_boton_timer(pantalla, boton_timer, texto_boton_timer):

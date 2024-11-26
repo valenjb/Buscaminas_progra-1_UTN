@@ -24,6 +24,7 @@ pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.2)
 
 sonido_mutado = False
+
 contador = 0
 corriendo = True
 mostrar_inicio = True                                                                      # Diccionario para las banderas
@@ -62,7 +63,7 @@ while corriendo:
 
                 elif boton_salir.collidepoint(event.pos):
                     corriendo = False
-                
+
                 elif boton_puntajes.collidepoint(event.pos):
                     mostrar_inicio = False
                     mostrar_puntaje = True
@@ -100,7 +101,7 @@ while corriendo:
         crear_rectangulos(matriz_completa, estados, pantalla, desplazamiento_x, desplazamiento_y, margen=2)
         redibujar_bandera(banderas, desplazamiento_x, desplazamiento_y, evento)
         boton_reiniciar = dibujar_boton_reiniciar(pantalla,imagen_reiniciar, 263, 670)
-        mostrar_tablero(pantalla, puntos, font_inicio, (75, 83, 32), (255,255,255), desplazamiento_x + 27, desplazamiento_y - 75, 100, 50)
+        mostrar_puntos_tablero(pantalla, puntos, font_inicio, (75, 83, 32), (255,255,255), desplazamiento_x + 27, desplazamiento_y - 75, 100, 50)
         dibujar_boton_timer(pantalla, boton_timer, mi_texto)
 
         if verificar_victoria(matriz_completa, estados) and ganaste == False:
@@ -114,6 +115,9 @@ while corriendo:
             guardar_puntaje(nick, puntos)  
             mostrar_inicio = True 
             jugar = False
+            ganaste = False
+            contador_segundos = False
+            juego_terminado = False
 
 
         for event in pygame.event.get():
