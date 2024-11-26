@@ -1,8 +1,7 @@
 import pygame
 from biblioteca import *
 from config import *
-import random
-import json
+
 pygame.init()
 #NOMBRE DE ARCHIVO E ICONO
 pygame.display.set_caption("BUSCAMINAS")

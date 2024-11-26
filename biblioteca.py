@@ -425,7 +425,7 @@ def mostrar_puntos_tablero(pantalla, puntos, fuente, color_rect, color_texto, x,
     pantalla.blit(texto_renderizado, texto_rect)
 
 
-def dibujar_boton_timer(pantalla, boton_timer, texto_boton_timer):
+def dibujar_boton_timer(pantalla:pygame.Surface, boton_timer, texto_boton_timer):
     pygame.draw.rect(pantalla, (75, 83, 32), boton_timer)
     texto_rect = texto_boton_timer.get_rect(center = boton_timer.center)
     pantalla.blit(texto_boton_timer, texto_rect)
