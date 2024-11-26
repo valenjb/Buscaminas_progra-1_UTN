@@ -134,13 +134,13 @@ def crear_rectangulos(matriz, estados, pantalla:pygame.Surface, desplazamiento_x
                     case 4:
                         color = (0, 0, 128)  # Azul oscuro
                     case 5:
-                        color = (128, 0, 0)  # Rojo oscuro
+                        color = (232, 225, 26)  # Amarillo oscuro ?)
                     case 6:
                         color = (0, 128, 128)  # Verde azulado
                     case 7:
-                        color = (75, 41, 41)  # Negro
+                        color = (128, 0, 0)  # Rojo oscuro
                     case 8:
-                        color = (0, 0, 0)  # Gris
+                        color = (0, 0, 0)  # Negro
 
                 texto = font_inicio.render(str(numero), True, color)
                 pantalla.blit(texto, (x + 17, y + 10)) #el +17 y +10 es para centrar el numero y que quede mejor
@@ -255,14 +255,15 @@ def dibujar_boton_reiniciar(pantalla, imagen_boton, x, y):
 
 
 
-def reiniciar_partida(tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado):
+def reiniciar_partida(tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado, ganaste):
     tablero = crear_matriz_buscaminas(8, 8, 10)
     estados = crear_diccionario_estados(8, 8)
     banderas = crear_diccionario_banderas(8, 8)
     matriz_completa = matriz_minas_contiguas(8, 8, tablero)
     mensaje_perder_mostrado = False
+    ganaste = False
     print("Partida reiniciada.")
-    return tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado
+    return tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado, ganaste
 
 def descubrir_area(matriz, estados, fila, columna,banderas):
     # Condiciones base
@@ -318,3 +319,43 @@ def verificar_victoria(matriz, estados):
     if contador_espacios_descubiertos == ganar:
         victoria = True
     return victoria
+
+
+def contador_reloj(segundos_totales):
+    """
+    Simula un reloj digital actualizando minutos y segundos.
+
+    parametros:
+        segundos_totales (int): Contador total de segundos.
+
+    Returns:
+        tupla: (minutos, segundos) actualizados.
+    """
+    segundos = segundos_totales % 60
+    minutos = segundos_totales // 60
+    return minutos, segundos
+
+
+def dibujar_boton_volver(pantalla, boton_volver, texto_boton_volver):
+    pygame.draw.rect(pantalla, (75, 83, 32), boton_volver)
+    pantalla.blit(texto_boton_volver, (boton_volver.x + 20, boton_volver.y + 5))
+
+
+def dibujar_fondo_tablero(pantalla, matriz_completa, COLOR_TABLERO):
+    """
+    Dibuja un fondo detrás del tablero del juego para evitar que la imagen de fondo afecte
+    los casilleros descubiertos.
+    """
+    filas = len(matriz_completa)
+    columnas = len(matriz_completa[0])
+    
+    # Calcular las dimensiones exactas del fondo que cubrirán el tablero
+    ancho_tablero = columnas * (50)
+    alto_tablero = filas * (50)
+    
+    # Calcular el desplazamiento para centrar el fondo
+    desplazamiento_x = (PANTALLA_ANCHO - ancho_tablero) // 2
+    desplazamiento_y = (PANTALLA_ALTO - alto_tablero) // 2
+    
+    # Dibujar el fondo con el tamaño adecuado
+    pygame.draw.rect(pantalla, COLOR_TABLERO, (desplazamiento_x, desplazamiento_y, ancho_tablero, alto_tablero))

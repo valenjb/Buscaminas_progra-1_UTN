@@ -23,8 +23,6 @@ pygame.mixer.music.load("audio/cancion.mp3")
 
 # Colores: RGB[A] (Red, Green, Blue) [Alpha] -> 0 - 255
 
-COLOR_ROJO = (255, 0, 0)
-COLOR_AZUL_CLARO = (127, 157, 235)
 COLOR_TABLERO = (169, 169, 169)
 
 #----------------------------  FUENTE   -------------------------------------------------
@@ -55,6 +53,9 @@ imagen_bandera = pygame.transform.scale(imagen_bandera, (50, 50))
 imagen_fondo = pygame.image.load("img/fondo_menu.jpg")
 imagen_fondo = pygame.transform.scale(imagen_fondo, (RESOLUCION_PANTALLA))
 
+imagen_fondo_juego = pygame.image.load("img/fondo_juego.jpg")
+imagen_fondo_juego = pygame.transform.scale(imagen_fondo_juego, (RESOLUCION_PANTALLA))
+
 imagen_reiniciar = pygame.image.load("img/boton_reinicio.png")
 imagen_reiniciar = pygame.transform.scale(imagen_reiniciar, (100, 100))
 
@@ -70,22 +71,21 @@ boton_jugar = pygame.Rect(200, 375, boton_ancho, boton_alto)
 boton_puntajes = pygame.Rect(200, 450, boton_ancho, boton_alto)
 boton_salir = pygame.Rect(200, 525, boton_ancho, boton_alto)
 
-texto_boton_nivel=font_inicio.render("Nivel",True,(255,255,255))
-
-texto_boton_jugar=font_inicio.render("Jugar",True,(255,255,255))
-
-texto_boton_puntajes=font_inicio.render("Puntajes",True,(255,255,255))
-
-texto_boton_salir=font_inicio.render("Salir",True,(255,255,255))
-
-
 boton_facil = pygame.Rect(200, 300, boton_ancho, boton_alto)
 boton_medio = pygame.Rect(200, 375, boton_ancho, boton_alto)
 boton_dificil = pygame.Rect(200, 450, boton_ancho, boton_alto)
 
+boton_volver = pygame.Rect(25, 25, 150, 40)
+
+#--------------------------- TEXTO DE BOTONES  ----------------------------------------
+
+texto_boton_nivel=font_inicio.render("Nivel",True,(255,255,255))
+texto_boton_jugar=font_inicio.render("Jugar",True,(255,255,255))
+texto_boton_puntajes=font_inicio.render("Puntajes",True,(255,255,255))
+texto_boton_salir=font_inicio.render("Salir",True,(255,255,255))
 
 texto_boton_Facil=font_inicio.render("Facil",True,(255,255,255))
-
 texto_boton_medio=font_inicio.render("Medio",True,(255,255,255))
-
 texto_boton_Dificil=font_inicio.render("Dificil",True,(255,255,255))
+
+texto_boton_volver = font_inicio.render("VOLVER", True, (255, 255, 255))
