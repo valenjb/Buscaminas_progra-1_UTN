@@ -133,6 +133,7 @@ while corriendo:
                     jugar = False 
                     mensaje_perder_mostrado = False
                     ganaste = False
+                    contador_segundos = 0
                 pos = event.pos
                 if boton_reiniciar.collidepoint(event.pos):
                     puntos = 0
