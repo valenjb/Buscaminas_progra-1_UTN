@@ -394,7 +394,7 @@ def pedir_usuario(pantalla:pygame.Surface, font:pygame.Surface, imagen_fondo:pyg
                 elif event.key == pygame.K_BACKSPACE:
                     nombre = nombre[:-1]
                 else:
-                    if len(nombre) < 20:
+                    if len(nombre) < 12:
                         nombre += event.unicode
     return nombre
 
@@ -492,7 +492,7 @@ def mostrar_mejores_puntajes(pantalla:pygame.Surface, font:pygame.font.Font, fon
         pygame.draw.rect(pantalla, (150, 150, 150), rect_puntaje)  
         pygame.draw.rect(pantalla, (150, 150, 150), rect_tiempo)  
 
-        texto_nombre = font.render(f"Nick: {nombre}", True, "white")
+        texto_nombre = font.render(f"{nombre}", True, "white")
         texto_puntaje = font.render(f"Puntaje: {puntaje}", True, "white")
         texto_tiempo = font.render(f"Tiempo: {tiempo}", True, "white")
         texto_titulo = font_2.render("Puntajes", True, "white")
