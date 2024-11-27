@@ -90,7 +90,7 @@ while corriendo:
 
 
     elif mostrar_puntaje == True:
-        mostrar_puntajes(pantalla,imagen_fondo_puntajes)
+        mostrar_fondo_puntajes(pantalla,imagen_fondo_puntajes)
         dibujar_boton_volver(pantalla, boton_volver, texto_boton_volver)
         puntajes_ordenados = acomodar_jugadores("database/puntajes.json")
         mostrar_mejores_puntajes(pantalla, font_puntajes, font_timer, puntajes_ordenados, 50, 350, 150, 50, 15)
@@ -125,13 +125,12 @@ while corriendo:
             mostrar_puntos_tablero(pantalla, puntos, font_inicio, (75, 83, 32), (255,255,255), desplazamiento_x + 27, desplazamiento_y - 55, 100, 50)
             dibujar_boton_timer(pantalla, mi_texto, 150, 50, (PANTALLA_ANCHO-desplazamiento_x)-147.5, desplazamiento_y-55)
 
-        if verificar_victoria(matriz_completa, estados,minas) and ganaste == False:
+        if verificar_victoria(matriz_completa, estados,minas, sonido_ganar) and ganaste == False:
             ganaste = True
             print("¡Ganaste!")
             limpiar_tablero(estados, matriz_completa, banderas)
             juego_terminado = True
-            
-            
+
 
 
         if juego_terminado:  
@@ -166,12 +165,12 @@ while corriendo:
                     contador_segundos=0
                     tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado, ganaste = reiniciar_partida(tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado, ganaste,filas_cantidad,columnas_cantidad,minas)
 
-                if manejar_perdida(matriz_completa, estados, pos, desplazamiento_x, desplazamiento_y, banderas) and mensaje_perder_mostrado == False:
+                if manejar_perdida(matriz_completa, estados, pos, desplazamiento_x, desplazamiento_y, banderas, sonido_bomba) and mensaje_perder_mostrado == False:
                     print("¡Hiciste clic en una mina! \n Fin del juego.")
                     mensaje_perder_mostrado = True
                     limpiar_tablero(estados, matriz_completa, banderas)
-                elif not manejar_perdida(matriz_completa, estados, pos, desplazamiento_x, desplazamiento_y, banderas) and mensaje_perder_mostrado == False:
-                    puntos = descubre_casillero(estados, banderas, pos, desplazamiento_x, desplazamiento_y,matriz_completa, puntos)
+                elif not manejar_perdida(matriz_completa, estados, pos, desplazamiento_x, desplazamiento_y, banderas, sonido_bomba) and mensaje_perder_mostrado == False:
+                    puntos = descubre_casillero(estados, banderas, pos, desplazamiento_x, desplazamiento_y,matriz_completa, puntos, sonido_click)
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                 pos = event.pos
                 poner_sacar_banderas(estados, banderas, pos, desplazamiento_x, desplazamiento_y)

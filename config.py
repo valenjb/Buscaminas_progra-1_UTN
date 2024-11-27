@@ -7,7 +7,7 @@ import pygame
 # resolucion_pantalla = (pantalla_ancho, pantalla_alto)
 
 PANTALLA_ALTO = 760
-PANTALLA_ANCHO = 1000
+PANTALLA_ANCHO = 600
 RESOLUCION_PANTALLA = (PANTALLA_ANCHO, PANTALLA_ALTO)
 
 INICIO_ALTO=760
@@ -25,6 +25,12 @@ posicion_personaje = [400, 300]
 pygame.mixer.init()
 pygame.mixer.music.load("audio/cancion.mp3")
 
+sonido_click = pygame.mixer.Sound("audio/click_casillero.mp3")
+sonido_click.set_volume(1.0)  # Ajusta el volumen (opcional)
+sonido_bomba=pygame.mixer.Sound("audio/sonido_perder.mp3")
+sonido_bomba.set_volume(0.015)
+sonido_ganar=pygame.mixer.Sound("audio/sound_ganar.mp3")
+sonido_ganar.set_volume(0.3)
 
 #-----------------------------  COLORES  -------------------------------------------------
 
