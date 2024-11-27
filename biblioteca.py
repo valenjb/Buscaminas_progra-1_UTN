@@ -112,15 +112,15 @@ def crear_diccionario_banderas(cant_filas: int, cant_colum: int)-> dict:
 def crear_rectangulos(matriz: list[list], estados:list[dict], pantalla: pygame.Surface, desplazamiento_x: int, desplazamiento_y: int, margen: int=2):
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
-            x = desplazamiento_x + j * 50
-            y = desplazamiento_y + i * 50
+            x = desplazamiento_x + j * 40
+            y = desplazamiento_y + i * 40
 
             if estados[(i, j)]:  # Si está cubierto (estando True)
                 pantalla.blit(imagen_cuadrado, (x, y))
             elif matriz[i][j] == -1 and estados[(i, j)] == False:  # Si es una mina y descubierto
                 pantalla.blit(imagen_mina, (x, y))
             elif matriz[i][j] == 0  and estados[(i, j)] == False:  # Si es un cuadrado vacío
-                pygame.draw.rect(pantalla, COLOR_TABLERO, (x, y, 50, 50))
+                pygame.draw.rect(pantalla, COLOR_TABLERO, (x, y, 40,40))
             else:  # Si es un número y se lo descubre
                 numero = matriz[i][j]
                 match numero:
@@ -144,17 +144,17 @@ def crear_rectangulos(matriz: list[list], estados:list[dict], pantalla: pygame.S
                 texto = font_inicio.render(str(numero), True, color)
                 pantalla.blit(texto, (x + 17, y + 10)) #el +17 y +10 es para centrar el numero y que quede mejor
 
-            pygame.draw.line(pantalla, (0, 0, 0), (x, y), (x + 50, y), margen)  # Línea arriba
-            pygame.draw.line(pantalla, (0, 0, 0), (x, y), (x, y + 50), margen)  # Línea izq
-            pygame.draw.line(pantalla, (0, 0, 0), (x + 50, y), (x + 50, y + 50), margen)  # Línea der
-            pygame.draw.line(pantalla, (0, 0, 0), (x, y + 50), (x + 50, y + 50), margen)  # Linea abajo
+            pygame.draw.line(pantalla, (0, 0, 0), (x, y), (x + 40, y), margen)  # Línea arriba
+            pygame.draw.line(pantalla, (0, 0, 0), (x, y), (x, y + 40), margen)  # Línea izq
+            pygame.draw.line(pantalla, (0, 0, 0), (x + 40, y), (x + 40, y + 40), margen)  # Línea der
+            pygame.draw.line(pantalla, (0, 0, 0), (x, y + 40), (x + 40, y + 40), margen)  # Linea abajo
 
 
 
 def descubre_casillero(estados: list[dict], banderas: list[dict], eventpos: tuple, desplazamiento_x: int, desplazamiento_y: int, matriz: list[list], puntos: int):
     mouse_x, mouse_y = eventpos
-    fila = (mouse_y - desplazamiento_y) // 50
-    columna = (mouse_x - desplazamiento_x) // 50
+    fila = (mouse_y - desplazamiento_y) // 40
+    columna = (mouse_x - desplazamiento_x) // 40
 
     if (fila, columna) in estados and banderas[(fila, columna)] == False and estados[(fila, columna)] == True:  # 
         if matriz[fila][columna] == 0:  # Si es un 0, descubre el área
@@ -170,8 +170,8 @@ def poner_sacar_banderas(estados: list[dict], banderas: list[dict], eventpos: tu
     mouse_x, mouse_y = eventpos
     
     
-    fila = (mouse_y - desplazamiento_y) // 50
-    columna = (mouse_x - desplazamiento_x) // 50
+    fila = (mouse_y - desplazamiento_y) // 40
+    columna = (mouse_x - desplazamiento_x) // 40
     if (fila, columna) in estados and estados[(fila, columna)] == True: 
         if banderas[(fila, columna)] == False:                              # Si la posicion no está en la misma posicion de una bandera, pone una bandera
             banderas[(fila, columna)] = True
@@ -182,12 +182,12 @@ def poner_sacar_banderas(estados: list[dict], banderas: list[dict], eventpos: tu
 def redibujar_bandera(banderas: list[dict], desplazamiento_x: int, desplazamiento_y: int, eventpos: tuple):
     mouse_x,mouse_y = eventpos
     
-    fila = (mouse_y - desplazamiento_y) // 50
-    columna = (mouse_x - desplazamiento_x) // 50
+    fila = (mouse_y - desplazamiento_y) // 40
+    columna = (mouse_x - desplazamiento_x) // 40
     for (fila, columna) in banderas:    
         if banderas[(fila,columna)]==True:                                        # Redibujar las banderas
-            x = desplazamiento_x + columna * 50
-            y = desplazamiento_y + fila * 50
+            x = desplazamiento_x + columna * 40
+            y = desplazamiento_y + fila * 40
             pantalla.blit(imagen_bandera, (x, y))
 
 
@@ -218,8 +218,8 @@ def texto_con_gradiente(texto: str, fuente:pygame.font.Font, color_inicio: list[
 
 def manejar_perdida(matriz: list[list], estados: list[dict], eventpos: tuple, desplazamiento_x: int, desplazamiento_y: int, banderas: list[dict]):
     mouse_x, mouse_y = eventpos
-    fila = (mouse_y - desplazamiento_y) // 50
-    columna = (mouse_x - desplazamiento_x) // 50
+    fila = (mouse_y - desplazamiento_y) // 40
+    columna = (mouse_x - desplazamiento_x) // 40
     retorno=False
     if (fila, columna) in estados and matriz[fila][columna] == -1 and banderas[(fila,columna)]== False:
         retorno=True  # pierde
@@ -249,7 +249,7 @@ def mostrar_niveles(pantalla:pygame.Surface, imagen_fondo:pygame.Surface):
 def dibujar_boton_reiniciar(pantalla:pygame.Surface, imagen_boton:pygame.Surface, x:int, y:int):
     boton_reiniciar = pygame.Rect(x, y, imagen_boton.get_width(), imagen_boton.get_height())
     pantalla.blit(imagen_reiniciar, (boton_reiniciar.x, boton_reiniciar.y))
-    pantalla.blit(texto_boton_reiniciar,(boton_reiniciar.x - 37, boton_reiniciar.y - 50))
+    pantalla.blit(texto_boton_reiniciar,(boton_reiniciar.x - 37, boton_reiniciar.y - 40))
 
     return boton_reiniciar
 
@@ -342,8 +342,8 @@ def dibujar_fondo_tablero(pantalla:pygame.Surface, matriz_completa:list[list], C
     columnas = len(matriz_completa[0])
     
     # Calcular las dimensiones exactas del fondo que cubrirán el tablero
-    ancho_tablero = columnas * (50)
-    alto_tablero = filas * (50)
+    ancho_tablero = columnas * (40)
+    alto_tablero = filas * (40)
     
     # Calcular el desplazamiento para centrar el fondo
     desplazamiento_x = (PANTALLA_ANCHO - ancho_tablero) // 2
@@ -423,7 +423,19 @@ def mostrar_puntos_tablero(pantalla:pygame.Surface, puntos, fuente:pygame.font.F
     pantalla.blit(texto_renderizado, texto_rect)
 
 
-def dibujar_boton_timer(pantalla:pygame.Surface, boton_timer:pygame.rect.Rect, texto_boton_timer:pygame.Surface):
+def dibujar_boton_timer(pantalla:pygame.Surface, texto_boton_timer:pygame.Surface, ancho:int, alto:int, x:int, y:int):
+    boton_timer = pygame.Rect(x,y, ancho, alto)
     pygame.draw.rect(pantalla, (75, 83, 32), boton_timer)
     texto_rect = texto_boton_timer.get_rect(center = boton_timer.center)
     pantalla.blit(texto_boton_timer, texto_rect)
+    
+    
+
+
+# def resolucion_juego(resolucion_pantalla, dificultad):
+#     if dificultad == "facil":
+#         resolucion_pantalla= (600,760)
+#     elif dificultad== "medio":
+#         resolucion_pantalla= (600,760)
+#     else:
+#         resolucion_pantalla= (1360,760)

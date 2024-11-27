@@ -2,7 +2,11 @@ import pygame
 
 #-----------------------------  PANTALLA  ------------------------------------------------
 
-PANTALLA_ALTO = 800
+# pantalla_alto = 760
+# pantalla_ancho = 600
+# resolucion_pantalla = (pantalla_ancho, pantalla_alto)
+
+PANTALLA_ALTO = 760
 PANTALLA_ANCHO = 600
 RESOLUCION_PANTALLA = (PANTALLA_ANCHO, PANTALLA_ALTO)
 
@@ -43,13 +47,13 @@ imagen_unmute = pygame.image.load("img/sonido.png")
 imagen_unmute = pygame.transform.scale(imagen_unmute, (60, 60))
 
 imagen_cuadrado=pygame.image.load("img/CUADRADO_BUSCAMINA.jpg")
-imagen_cuadrado=pygame.transform.scale(imagen_cuadrado,(50,50))
+imagen_cuadrado=pygame.transform.scale(imagen_cuadrado,(40,40))
 
 imagen_mina = pygame.image.load("img/mina.png")
-imagen_mina = pygame.transform.scale(imagen_mina, (50, 50))
+imagen_mina = pygame.transform.scale(imagen_mina, (40,40))
 
 imagen_bandera = pygame.image.load("img/bandera.png")
-imagen_bandera = pygame.transform.scale(imagen_bandera, (50, 50))
+imagen_bandera = pygame.transform.scale(imagen_bandera, (40,40))
 
 imagen_fondo = pygame.image.load("img/fondo_menu.jpg")
 imagen_fondo = pygame.transform.scale(imagen_fondo, (RESOLUCION_PANTALLA))
@@ -79,7 +83,6 @@ boton_facil = pygame.Rect(200, 300, boton_ancho, boton_alto)
 boton_medio = pygame.Rect(200, 375, boton_ancho, boton_alto)
 boton_dificil = pygame.Rect(200, 450, boton_ancho, boton_alto)
 boton_reiniciar = pygame.Rect(263,650, boton_ancho, boton_alto )
-boton_timer = pygame.Rect(300, 125, boton_ancho, boton_alto)
 
 boton_volver = pygame.Rect(25, 25, 150, 40)
 
