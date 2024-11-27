@@ -24,7 +24,7 @@ def pantalla_inicio(sonido_mutado, pantalla, font_inicio):
     pantalla.blit(texto_boton_salir, (boton_salir.x + 58, boton_salir.y + 10))
 
 
-def dibujar_texto(texto,fuente,color,x,y):
+def dibujar_texto(texto, fuente, color, x, y):
     img=fuente.render(texto,True,color)
     pantalla.blit(img,(x,y))
 
@@ -37,7 +37,7 @@ def generar_color_aleatorio()->list:
 #-----------------------------  LOGICA DE MINAS  ------------------------------------------------
 
 
-def inicializar_matriz(cant_filas:int , cant_colum:int)->list:
+def inicializar_matriz(cant_filas:int, cant_colum:int)->list:
     matriz=[]
     for _ in range(cant_filas):
             fila=[0]*cant_colum
@@ -94,14 +94,14 @@ def test_matriz(matriz:list):
         print("")
 
 
-def crear_diccionario_estados(cant_filas: int, cant_colum: int) -> dict:
+def crear_diccionario_estados(cant_filas: int, cant_colum: int)-> dict:
     estados = {}
     for fila in range(cant_filas):
         for col in range(cant_colum):
             estados[(fila, col)] = True
     return estados
 
-def crear_diccionario_banderas(cant_filas: int, cant_colum: int) -> dict:
+def crear_diccionario_banderas(cant_filas: int, cant_colum: int)-> dict:
     banderas = {}
     for fila in range(cant_filas):
         for col in range(cant_colum):
@@ -166,7 +166,7 @@ def descubre_casillero(estados, banderas, eventpos, desplazamiento_x, desplazami
             
     return puntos
 
-def poner_sacar_banderas(estados,banderas,eventpos,desplazamiento_x,desplazamiento_y):
+def poner_sacar_banderas(estados, banderas, eventpos, desplazamiento_x, desplazamiento_y):
     mouse_x, mouse_y = eventpos
     
     
@@ -179,7 +179,7 @@ def poner_sacar_banderas(estados,banderas,eventpos,desplazamiento_x,desplazamien
             banderas[(fila, columna)]=False
 
 
-def redibujar_bandera(banderas,desplazamiento_x,desplazamiento_y,eventpos):
+def redibujar_bandera(banderas, desplazamiento_x, desplazamiento_y, eventpos):
     mouse_x,mouse_y = eventpos
     
     fila = (mouse_y - desplazamiento_y) // 50
@@ -233,7 +233,7 @@ def limpiar_tablero(estados, matriz, banderas):
 
 
 
-def mostrar_niveles(pantalla,imagen_fondo):
+def mostrar_niveles(pantalla, imagen_fondo):
     pantalla.blit(imagen_fondo, (0, 0))
 
     pygame.draw.rect(pantalla, (75, 83, 32), boton_facil)
@@ -354,7 +354,7 @@ def dibujar_fondo_tablero(pantalla, matriz_completa, COLOR_TABLERO):
     pygame.draw.rect(pantalla, COLOR_TABLERO, (desplazamiento_x, desplazamiento_y, ancho_tablero, alto_tablero))
 
 
-def mostrar_puntajes(pantalla,imagen_fondo):
+def mostrar_puntajes(pantalla, imagen_fondo):
     
     pantalla.blit(imagen_fondo, (0, 0))
 
