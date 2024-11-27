@@ -38,6 +38,11 @@ if PANTALLA_ANCHO==1000:
     minas=40
     filas_cantidad=16
     columnas_cantidad=16
+
+if PANTALLA_ANCHO==1360:
+    minas=100
+    filas_cantidad=16
+    columnas_cantidad=32
 while corriendo:
     if mostrar_inicio and jugar==False:
         puntos = 0
@@ -125,16 +130,19 @@ while corriendo:
             print("¡Ganaste!")
             limpiar_tablero(estados, matriz_completa, banderas)
             juego_terminado = True
+            
+            
 
 
         if juego_terminado:  
-            nick = pedir_usuario(pantalla, font_inicio, imagen_fondo_puntajes)  # Pedir el nombre
+            nick = pedir_usuario(pantalla, font_inicio, imagen_fondo_puntajes_final)  # Pedir el nombre
             guardar_puntaje(nick, puntos, contador_segundos)  
             mostrar_inicio = True 
             jugar = False
             ganaste = False
             contador_segundos = False
             juego_terminado = False
+            cambiar_resolucion(RESOLUCION_INICIO)
 
 
         for event in pygame.event.get():

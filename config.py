@@ -66,7 +66,10 @@ imagen_fondo_juego = pygame.image.load("img/fondo_juego.jpg")
 imagen_fondo_juego = pygame.transform.scale(imagen_fondo_juego, (RESOLUCION_PANTALLA))
 
 imagen_fondo_puntajes = pygame.image.load("img/fondo_puntajes.jpg")
-imagen_fondo_puntajes = pygame.transform.scale(imagen_fondo_puntajes, (RESOLUCION_PANTALLA))
+imagen_fondo_puntajes = pygame.transform.scale(imagen_fondo_puntajes, (RESOLUCION_INICIO))
+
+imagen_fondo_puntajes_final = pygame.image.load("img/fondo_puntajes.jpg")
+imagen_fondo_puntajes_final = pygame.transform.scale(imagen_fondo_puntajes, (RESOLUCION_PANTALLA))
 
 imagen_reiniciar = pygame.image.load("img/boton_reinicio.png")
 imagen_reiniciar = pygame.transform.scale(imagen_reiniciar, (75, 75))

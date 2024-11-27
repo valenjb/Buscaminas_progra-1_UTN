@@ -6,10 +6,19 @@ from config import *
 #-----------------------------  PANTALLA  ------------------------------------------------------
 
 def cambiar_resolucion(resolucion):
+    """
+    Cambia la resolución de la ventana.
+    Recibe: Tupla con ancho y alto de la ventana.
+    Retorna: Nueva superficie con la resolución especificada.
+    """
     return pygame.display.set_mode(resolucion)
 
-def pantalla_inicio(sonido_mutado: bool, pantalla: pygame.Surface, font_inicio: pygame.font.Font, ancho:tuple, alto:tuple):
-
+def pantalla_inicio(sonido_mutado: bool, pantalla: pygame.Surface, font_inicio: pygame.font.Font, ancho:tuple, alto:tuple)->None:
+    """
+    Dibuja la pantalla de inicio del juego.
+    Recibe: Sonido, superficie, fuente, dimensiones(width,height)
+    Retorna: None.
+    """
     pantalla.blit(imagen_fondo, (0, 0))
     dibujar_boton_sonido(sonido_mutado, imagen_unmute, imagen_mute, boton_mute)
     # Crear texto con gradiente
@@ -27,20 +36,27 @@ def pantalla_inicio(sonido_mutado: bool, pantalla: pygame.Surface, font_inicio: 
     pantalla.blit(texto_boton_salir, (boton_salir.x + 58, boton_salir.y + 10))
 
 
-def dibujar_texto(texto: str, fuente:pygame.font.Font, color: tuple[int, int, int], x: int, y: int):
+def dibujar_texto(texto: str, fuente:pygame.font.Font, color: tuple[int, int, int], x: int, y: int)->None:
+    """
+    Dibuja un texto en la pantalla.
+    Recibe: 
+        texto, fuente, color, desplazamiento_x ,desplazamiento_y 
+    Retorna: None.
+    """
     img=fuente.render(texto,True,color)
     pantalla.blit(img,(x,y))
 
-
-def generar_color_aleatorio()->list:
-    return [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)]
-
-
-
-#-----------------------------  LOGICA DE MINAS  ------------------------------------------------
+#-----------------------------  LOGICA DE MATRICES  ------------------------------------------------
 
 
 def inicializar_matriz(cant_filas: int, cant_colum: int)->list:
+    """
+    Crea una matriz de ceros.
+    Recibe:
+        cant_filas (int) - Cantidad de filas.
+        cant_colum (int) - Cantidad de columnas.
+    Retorna: list - Matriz con ceros.
+    """
     matriz=[]
     for _ in range(cant_filas):
             fila=[0]*cant_colum
@@ -48,12 +64,15 @@ def inicializar_matriz(cant_filas: int, cant_colum: int)->list:
             matriz.append(fila)
     return matriz
 
-
-
-#-----------------------------  MATRIZ  ------------------------------------------------
-
-
 def crear_matriz_buscaminas(cant_filas: int, cant_colum: int, minas: int)->list:
+    """
+    Genera una matriz con minas colocadas aleatoriamente.
+    Recibe:
+        Cantidad de filas.
+        Cantidad de columnas.
+        Cantidad de minas a colocar.
+    Retorna una lista
+    """
     matriz=inicializar_matriz(cant_filas,cant_colum)
     minas_colocadas=0
     
@@ -69,8 +88,15 @@ def crear_matriz_buscaminas(cant_filas: int, cant_colum: int, minas: int)->list:
 
 
 def descrubir_minas_contiguas(cant_filas: int, cant_colum: int, matriz: list[list])->int:
+    """
+    Calcula la cantidad de minas contiguas a una celda.
+    Recibe:
+        Fila de la celda.
+        Columna de la celda.
+        Matriz del tablero.
+    Retorna: int - Número de minas contiguas.
+    """
     minas=0
-
     for i in range(cant_filas-1,cant_filas+2):                                              #Pongo -1 y +2 para recorrer las diagonales y los costado
         for j in range(cant_colum-1,cant_colum+2):
             if i >=0 and i<len(matriz):                                                     #verifico que este dentro de las dimensiones de la matriz
@@ -81,6 +107,14 @@ def descrubir_minas_contiguas(cant_filas: int, cant_colum: int, matriz: list[lis
 
 
 def matriz_minas_contiguas(cant_filas: int, cant_column: int, matriz: list[list])->list:
+    """
+    Calcula la matriz de pistas indicando minas contiguas.
+    Recibe:
+        Cantidad de filas.
+        Cantidad de columnas.
+        Matriz del tablero.
+    Retorna: list - Matriz con pistas.
+    """
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
             if matriz[i][j]==0:
@@ -91,6 +125,11 @@ def matriz_minas_contiguas(cant_filas: int, cant_column: int, matriz: list[list]
 
 
 def test_matriz(matriz: list[list]):
+    """
+    Imprime la matriz en consola.
+    Recibe: Matriz del tablero.
+    Retorna: None.
+    """
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
             print(f"({matriz[i][j]})",end=" ")
@@ -98,6 +137,13 @@ def test_matriz(matriz: list[list]):
 
 
 def crear_diccionario_estados(cant_filas: int, cant_colum: int)-> dict:
+    """
+    Crea un diccionario con los estados de las celdas.
+    Recibe:
+        Cantidad de filas.
+        Cantidad de columnas.
+    Retorna: dict - Diccionario de estados inicializado en True.
+    """
     estados = {}
     for fila in range(cant_filas):
         for col in range(cant_colum):
@@ -105,6 +151,13 @@ def crear_diccionario_estados(cant_filas: int, cant_colum: int)-> dict:
     return estados
 
 def crear_diccionario_banderas(cant_filas: int, cant_colum: int)-> dict:
+    """
+    Crea un diccionario para las banderas.
+    Recibe:
+        Cantidad de filas.
+        Cantidad de columnas.
+    Retorna: dict - Diccionario de banderas inicializado en False.
+    """
     banderas = {}
     for fila in range(cant_filas):
         for col in range(cant_colum):
@@ -112,7 +165,20 @@ def crear_diccionario_banderas(cant_filas: int, cant_colum: int)-> dict:
     return banderas
 
 
-def crear_rectangulos(matriz: list[list], estados:list[dict], pantalla: pygame.Surface, desplazamiento_x: int, desplazamiento_y: int, margen: int=2):
+def crear_rectangulos(matriz: list[list], estados:list[dict], pantalla: pygame.Surface, desplazamiento_x: int, desplazamiento_y: int, margen: int=2)->None:
+    """
+    Dibuja los rectángulos (casillas) del tablero, mostrando su estado (cubierto, descubierto, mina o número).
+    
+    Recibe:
+    matriz: matriz del tablero de buscaminas.
+    estados: diccionario con el estado de cada casilla (True = cubierta, False = descubierta).
+    pantalla: superficie donde se dibujan los elementos.
+    desplazamiento_x: desplazamiento horizontal para dibujar el tablero.
+    desplazamiento_y: desplazamiento vertical para dibujar el tablero.
+    margen: grosor de las líneas que separan las casillas.
+    Retorna:
+    Nada.
+    """
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
             x = desplazamiento_x + j * 40
@@ -154,7 +220,22 @@ def crear_rectangulos(matriz: list[list], estados:list[dict], pantalla: pygame.S
 
 
 
-def descubre_casillero(estados: list[dict], banderas: list[dict], eventpos: tuple, desplazamiento_x: int, desplazamiento_y: int, matriz: list[list], puntos: int):
+def descubre_casillero(estados: list[dict], banderas: list[dict], eventpos: tuple, desplazamiento_x: int, desplazamiento_y: int, matriz: list[list], puntos: int)->None:
+    """
+    Descubre un casillero del tablero si está permitido y actualiza la puntuación.
+
+    Recibe:
+    estados: diccionario con el estado de las casillas (cubiertas o descubiertas).
+    banderas: diccionario que indica si una casilla tiene bandera.
+    eventpos: posición del clic del ratón.
+    desplazamiento_x: desplazamiento horizontal del tablero.
+    desplazamiento_y: desplazamiento vertical del tablero.
+    matriz: matriz del tablero de buscaminas.
+    puntos: puntuación actual.
+
+    Retorna:
+    La puntuación actualizada.
+    """
     mouse_x, mouse_y = eventpos
     fila = (mouse_y - desplazamiento_y) // 40
     columna = (mouse_x - desplazamiento_x) // 40
@@ -170,9 +251,20 @@ def descubre_casillero(estados: list[dict], banderas: list[dict], eventpos: tupl
     return puntos
 
 def poner_sacar_banderas(estados: list[dict], banderas: list[dict], eventpos: tuple, desplazamiento_x: int, desplazamiento_y: int):
+    """
+    Coloca o quita una bandera en una casilla seleccionada.
+
+    Recibe:
+    estados: diccionario con el estado de las casillas.
+    banderas: diccionario que indica si una casilla tiene bandera.
+    eventpos: posición del clic del ratón.
+    desplazamiento_x: desplazamiento horizontal del tablero.
+    desplazamiento_y: desplazamiento vertical del tablero.
+
+    Retorna:
+    Nada.
+    """
     mouse_x, mouse_y = eventpos
-    
-    
     fila = (mouse_y - desplazamiento_y) // 40
     columna = (mouse_x - desplazamiento_x) // 40
     if (fila, columna) in estados and estados[(fila, columna)] == True: 
@@ -183,6 +275,18 @@ def poner_sacar_banderas(estados: list[dict], banderas: list[dict], eventpos: tu
 
 
 def redibujar_bandera(banderas: list[dict], desplazamiento_x: int, desplazamiento_y: int, eventpos: tuple):
+    """
+    Redibuja las banderas en el tablero según el diccionario de banderas.
+
+    Recibe:
+    banderas: diccionario con las posiciones de las banderas.
+    desplazamiento_x: desplazamiento horizontal del tablero.
+    desplazamiento_y: desplazamiento vertical del tablero.
+    eventpos: posición del evento del ratón.
+
+    Retorna:
+    Nada.
+    """
     mouse_x,mouse_y = eventpos
     
     fila = (mouse_y - desplazamiento_y) // 40
@@ -195,6 +299,20 @@ def redibujar_bandera(banderas: list[dict], desplazamiento_x: int, desplazamient
 
 
 def texto_con_gradiente(texto: str, fuente:pygame.font.Font, color_inicio: list[tuple], color_fin: list[tuple], ancho: int, alto: int):
+    """
+    Genera una superficie de texto con un gradiente de colores.
+
+    Recibe:
+    texto: texto a renderizar.
+    fuente: fuente utilizada para renderizar el texto.
+    color_inicio: color inicial del gradiente.
+    color_fin: color final del gradiente.
+    ancho: ancho de la superficie.
+    alto: alto de la superficie.
+
+    Retorna:
+    Superficie con el texto y gradiente aplicado.
+    """
     # Renderizar texto en blanco para tomar las dimensiones
     texto_superficie = fuente.render(texto, True, (255, 255, 255))
     texto_rect = texto_superficie.get_rect(center=(ancho // 2, alto // 2))
@@ -220,6 +338,20 @@ def texto_con_gradiente(texto: str, fuente:pygame.font.Font, color_inicio: list[
 
 
 def manejar_perdida(matriz: list[list], estados: list[dict], eventpos: tuple, desplazamiento_x: int, desplazamiento_y: int, banderas: list[dict]):
+    """
+    Verifica si el jugador pierde al descubrir una mina.
+
+    Recibe:
+    matriz: matriz del tablero de buscaminas.
+    estados: diccionario con los estados de las casillas.
+    eventpos: posición del clic del ratón.
+    desplazamiento_x: desplazamiento horizontal del tablero.
+    desplazamiento_y: desplazamiento vertical del tablero.
+    banderas: diccionario con las posiciones de las banderas.
+
+    Retorna:
+    True si se pierde; False en caso contrario.
+    """
     mouse_x, mouse_y = eventpos
     fila = (mouse_y - desplazamiento_y) // 40
     columna = (mouse_x - desplazamiento_x) // 40
@@ -229,6 +361,17 @@ def manejar_perdida(matriz: list[list], estados: list[dict], eventpos: tuple, de
     return retorno  # no perdio
 
 def limpiar_tablero(estados: list[dict], matriz: list[list], banderas: list[dict]):
+    """
+    Limpia el tablero, estableciendo todos los estados como descubiertos y removiendo las banderas.
+
+    Recibe:
+    estados: diccionario con los estados de las casillas.
+    matriz: matriz del tablero de buscaminas.
+    banderas: diccionario con las posiciones de las banderas.
+
+    Retorna:
+    Nada.
+    """
     for i in range (len(matriz)):
         for j in range(len(matriz[0])):
             estados[(i,j)] = False
@@ -237,6 +380,16 @@ def limpiar_tablero(estados: list[dict], matriz: list[list], banderas: list[dict
 
 
 def mostrar_niveles(pantalla:pygame.Surface, imagen_fondo:pygame.Surface):
+    """
+    Dibuja la pantalla de selección de niveles.
+
+    Recibe:
+    pantalla: superficie donde se dibujan los elementos.
+    imagen_fondo: fondo de la pantalla.
+
+    Retorna:
+    Nada.
+    """
     pantalla.blit(imagen_fondo, (0, 0))
 
     pygame.draw.rect(pantalla, (75, 83, 32), boton_facil)
@@ -250,6 +403,21 @@ def mostrar_niveles(pantalla:pygame.Surface, imagen_fondo:pygame.Surface):
 
 
 def dibujar_boton_reiniciar(pantalla:pygame.Surface, font: pygame.font.Font, matriz:list[list], x:int, y:int, ancho:int, alto:int):
+    """
+    Dibuja el botón de reinicio en el tablero.
+
+    Recibe:
+    pantalla: superficie donde se dibuja el botón.
+    font: fuente del texto del botón.
+    matriz: matriz del tablero.
+    x: posición horizontal del tablero.
+    y: posición vertical del tablero.
+    ancho: ancho del botón.
+    alto: alto del botón.
+
+    Retorna:
+    Objeto Rect del botón.
+    """
 
     x_final=(x+len(matriz[0])*40/2) - (ancho // 2)
     y_final=(y+len(matriz)*40) + 10
@@ -262,7 +430,24 @@ def dibujar_boton_reiniciar(pantalla:pygame.Surface, font: pygame.font.Font, mat
     return boton
 
 
-def reiniciar_partida(tablero:list[list], estados:list[dict], banderas:list[dict], matriz_completa:list[list], mensaje_perder_mostrado:bool, ganaste:bool,filas,columnas,minas):
+def reiniciar_partida(tablero:list[list], estados:list[dict], banderas:list[dict], matriz_completa:list[list], mensaje_perder_mostrado:bool, ganaste:bool,filas,columnas,minas)->any:
+    """
+    Reinicia la partida creando un nuevo tablero y restableciendo los estados.
+
+    Recibe:
+    tablero: tablero actual.
+    estados: estados de las casillas.
+    banderas: posiciones de las banderas.
+    matriz_completa: matriz completa con pistas y minas.
+    mensaje_perder_mostrado: estado del mensaje de derrota.
+    ganaste: estado de victoria.
+    filas: cantidad de filas del tablero.
+    columnas: cantidad de columnas del tablero.
+    minas: cantidad de minas.
+
+    Retorna:
+    Nuevos valores para tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado y ganaste.
+    """
     tablero = crear_matriz_buscaminas(filas, columnas, minas)
     estados = crear_diccionario_estados(filas, columnas)
     banderas = crear_diccionario_banderas(filas, columnas)
@@ -272,7 +457,21 @@ def reiniciar_partida(tablero:list[list], estados:list[dict], banderas:list[dict
     print("Partida reiniciada.")
     return tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado, ganaste
 
-def descubrir_area(matriz:list[list], estados:list[dict], fila:int, columna:int, banderas:list[dict], puntos:int):
+def descubrir_area(matriz:list[list], estados:list[dict], fila:int, columna:int, banderas:list[dict], puntos:int)->int:
+    """
+    Descubre un área del tablero a partir de una casilla vacía.
+
+    Recibe:
+    matriz: matriz del tablero de buscaminas.
+    estados: estados de las casillas.
+    fila: fila de la casilla inicial.
+    columna: columna de la casilla inicial.
+    banderas: posiciones de las banderas.
+    puntos: puntuación actual.
+
+    Retorna:
+    Puntuación actualizada.
+    """
     if (fila < 0 or fila >= len(matriz) or columna < 0 or columna >= len(matriz[0]) or estados[(fila, columna)] == False or  banderas[(fila, columna)] == True):
         return puntos
     
@@ -291,7 +490,14 @@ def descubrir_area(matriz:list[list], estados:list[dict], fila:int, columna:int,
     puntos = descubrir_area(matriz, estados, fila + 1, columna + 1, banderas, puntos)  # Abajo-Derecha
     return puntos
 
-def cambiar_estado_sonido(sonido_mutado:bool):
+def cambiar_estado_sonido(sonido_mutado:bool)->bool:
+    """
+    Cambia el estado del sonido (mute/unmute).
+    Recibe:
+    sonido_mutado: estado actual del sonido.
+    Retorna:
+    Nuevo estado del sonido.
+    """
     sonido_mutado = not sonido_mutado
     if sonido_mutado:
         pygame.mixer.music.set_volume(0)
@@ -299,7 +505,19 @@ def cambiar_estado_sonido(sonido_mutado:bool):
         pygame.mixer.music.set_volume(0.1)
     return sonido_mutado
 
-def dibujar_boton_sonido(sonido_mutado:bool, imagen_unmute:pygame.Surface, imagen_mute:pygame.Surface, boton_mute:pygame.rect.Rect):
+def dibujar_boton_sonido(sonido_mutado:bool, imagen_unmute:pygame.Surface, imagen_mute:pygame.Surface, boton_mute:pygame.rect.Rect)->None:
+    """
+    Dibuja el botón de sonido según su estado.
+
+    Recibe:
+    - sonido_mutado: estado actual del sonido.
+    - imagen_unmute: imagen del botón cuando el sonido está activado.
+    - imagen_mute: imagen del botón cuando el sonido está desactivado.
+    - boton_mute: rectángulo que delimita el botón.
+
+    Retorna:
+    - Nada.
+    """
     if sonido_mutado:
         pantalla.blit(imagen_mute, boton_mute)
     else:
