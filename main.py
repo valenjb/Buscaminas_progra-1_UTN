@@ -63,7 +63,7 @@ while corriendo:
                     estados = crear_diccionario_estados(filas_cantidad,columnas_cantidad,)
                     banderas = crear_diccionario_banderas(filas_cantidad,columnas_cantidad,)
                     matriz_completa = matriz_minas_contiguas(filas_cantidad,columnas_cantidad, tablero)
-                    test_matriz(matriz_completa)
+                    # test_matriz(matriz_completa)
                     evento=event.pos
 
                 elif boton_nivel.collidepoint(event.pos):
