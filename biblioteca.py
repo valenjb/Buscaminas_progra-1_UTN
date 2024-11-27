@@ -6,12 +6,15 @@ from config import *
 #-----------------------------  PANTALLA  ------------------------------------------------------
 
 
-def pantalla_inicio(sonido_mutado: bool, pantalla: pygame.Surface, font_inicio: pygame.font.Font):
+def cambiar_resolucion(resolucion):
+    return pygame.display.set_mode(resolucion)
+
+def pantalla_inicio(sonido_mutado: bool, pantalla: pygame.Surface, font_inicio: pygame.font.Font,inicio_ancho:int ,inicio_alto:int):
     pantalla.blit(imagen_fondo, (0, 0))
     dibujar_boton_sonido(sonido_mutado, imagen_unmute, imagen_mute, boton_mute)
     # Crear texto con gradiente
-    texto_gradiente = texto_con_gradiente("BUSCAMINAS", font_inicio, (255, 0, 0), (0, 0, 0), PANTALLA_ANCHO, PANTALLA_ALTO)
-    pantalla.blit(texto_gradiente, (PANTALLA_ANCHO / 2 - texto_gradiente.get_width() // 2, PANTALLA_ALTO / 2 - 180))
+    texto_gradiente = texto_con_gradiente("BUSCAMINAS", font_inicio, (255, 0, 0), (0, 0, 0), inicio_ancho, inicio_alto)
+    pantalla.blit(texto_gradiente, (inicio_ancho / 2 - texto_gradiente.get_width() // 2, inicio_alto / 2 - 180))
 
     # Dibujar botones
     pygame.draw.rect(pantalla, (75, 83, 32), boton_nivel)

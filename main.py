@@ -39,9 +39,9 @@ if PANTALLA_ANCHO==1000:
     filas_cantidad=16
     columnas_cantidad=16
 while corriendo:
-    if mostrar_inicio:
+    if mostrar_inicio and jugar==False:
         puntos = 0
-        pantalla_inicio(sonido_mutado, pantalla, font_inicio)
+        pantalla_inicio(sonido_mutado, pantalla_inicio_2, font_inicio,inicio_ancho,inicio_alto)
         for event in pygame.event.get():
             
             if event.type == pygame.QUIT:
@@ -51,6 +51,7 @@ while corriendo:
                     sonido_mutado = cambiar_estado_sonido(sonido_mutado)
 
                 if boton_jugar.collidepoint(event.pos):
+                    pantalla = pygame.display.set_mode(RESOLUCION_PANTALLA)
                     jugar=True
                     mostrar_inicio = False
                     tablero = crear_matriz_buscaminas(filas_cantidad,columnas_cantidad,minas)
@@ -72,8 +73,8 @@ while corriendo:
                     mostrar_puntaje = True
                     
     if mostrar_nivel==True:
-        mostrar_niveles(pantalla,imagen_fondo)
-        dibujar_boton_volver(pantalla, boton_volver, texto_boton_volver)
+        mostrar_niveles(pantalla_inicio_2,imagen_fondo)
+        dibujar_boton_volver(pantalla_inicio_2, boton_volver, texto_boton_volver)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 corriendo = False
@@ -81,6 +82,7 @@ while corriendo:
                 if boton_volver.collidepoint(event.pos):
                     mostrar_inicio = True
                     mostrar_nivel = False
+
 
     elif mostrar_puntaje == True:
         mostrar_puntajes(pantalla,imagen_fondo_puntajes)
@@ -97,7 +99,7 @@ while corriendo:
                     
 
 
-    elif jugar == True:
+    elif jugar == True and mostrar_inicio==False:
         
         pantalla.blit(imagen_fondo_juego, (0, 0))
         
@@ -149,6 +151,7 @@ while corriendo:
                     mensaje_perder_mostrado = False
                     ganaste = False
                     contador_segundos = 0
+                    cambiar_resolucion(resolucion_inicio)
                 pos = event.pos
                 if boton_reiniciar.collidepoint(event.pos):
                     puntos = 0
