@@ -6,7 +6,7 @@ import pygame
 # pantalla_ancho = 600
 # resolucion_pantalla = (pantalla_ancho, pantalla_alto)
 
-PANTALLA_ALTO = 760
+PANTALLA_ALTO =760
 PANTALLA_ANCHO = 600
 RESOLUCION_PANTALLA = (PANTALLA_ANCHO, PANTALLA_ALTO)
 
@@ -34,7 +34,7 @@ COLOR_TABLERO = (169, 169, 169)
 pygame.font.init()
 
 font_inicio=pygame.font.Font("font/mifuente.otf",24)
-font_timer = pygame.font.Font("font/mifuente.otf",36)
+font_timer = pygame.font.Font("font/mifuente.otf",24)
 
 
 #---------------------------  IMAGENES  -------------------------------------------------
@@ -84,7 +84,7 @@ boton_medio = pygame.Rect(200, 375, boton_ancho, boton_alto)
 boton_dificil = pygame.Rect(200, 450, boton_ancho, boton_alto)
 boton_reiniciar = pygame.Rect(263,650, boton_ancho, boton_alto )
 
-boton_volver = pygame.Rect(25, 25, 150, 40)
+boton_volver = pygame.Rect(25, 10, 150, 40)
 
 #--------------------------- TEXTO DE BOTONES  ----------------------------------------
 

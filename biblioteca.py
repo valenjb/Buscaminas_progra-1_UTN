@@ -114,7 +114,14 @@ def crear_rectangulos(matriz: list[list], estados:list[dict], pantalla: pygame.S
         for j in range(len(matriz[i])):
             x = desplazamiento_x + j * 40
             y = desplazamiento_y + i * 40
-
+            if i == len(matriz) - 1:
+            # Verificar si estamos en la mitad de esa última fila
+                if j == len(matriz[i]) // 2:
+                    posicion_x = x
+                    posicion_y = y
+                    
+                    bandera = True  # Actualizamos el flag si la condición se cumple
+                    
             if estados[(i, j)]:  # Si está cubierto (estando True)
                 pantalla.blit(imagen_cuadrado, (x, y))
             elif matriz[i][j] == -1 and estados[(i, j)] == False:  # Si es una mina y descubierto
@@ -246,8 +253,10 @@ def mostrar_niveles(pantalla:pygame.Surface, imagen_fondo:pygame.Surface):
 
 
 
-def dibujar_boton_reiniciar(pantalla:pygame.Surface, imagen_boton:pygame.Surface, x:int, y:int):
-    boton_reiniciar = pygame.Rect(x, y, imagen_boton.get_width(), imagen_boton.get_height())
+def dibujar_boton_reiniciar(pantalla:pygame.Surface, imagen_boton:pygame.Surface, x:int, y:int,matriz_completa):
+    x_final=(x+len(matriz_completa[0])*40/2)-40
+    y_final=(y+len(matriz_completa)*40)+40
+    boton_reiniciar = pygame.Rect(x_final, y_final, imagen_boton.get_width(), imagen_boton.get_height())
     pantalla.blit(imagen_reiniciar, (boton_reiniciar.x, boton_reiniciar.y))
     pantalla.blit(texto_boton_reiniciar,(boton_reiniciar.x - 37, boton_reiniciar.y - 40))
 
@@ -426,8 +435,8 @@ def mostrar_puntos_tablero(pantalla:pygame.Surface, puntos, fuente:pygame.font.F
 def dibujar_boton_timer(pantalla:pygame.Surface, texto_boton_timer:pygame.Surface, ancho:int, alto:int, x:int, y:int):
     boton_timer = pygame.Rect(x,y, ancho, alto)
     pygame.draw.rect(pantalla, (75, 83, 32), boton_timer)
-    texto_rect = texto_boton_timer.get_rect(center = boton_timer.center)
-    pantalla.blit(texto_boton_timer, texto_rect)
+    texto_re = texto_boton_timer.get_rect(center = boton_timer.center)
+    pantalla.blit(texto_boton_timer,texto_re)
     
     
 
