@@ -17,13 +17,13 @@ mi_texto=font_timer.render(f"{contador_segundos}0:00",True,"white")
 
 
 
-
 #AUDIO
 pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.2)
-
+minas=10
 sonido_mutado = False
-
+filas_cantidad=8
+columnas_cantidad=8
 contador = 0
 corriendo = True
 mostrar_inicio = True                                                                      # Diccionario para las banderas
@@ -34,6 +34,10 @@ mensaje_perder_mostrado = False
 ganaste = False
 juego_terminado = False
 
+if PANTALLA_ANCHO==1000:
+    minas=40
+    filas_cantidad=16
+    columnas_cantidad=16
 while corriendo:
     if mostrar_inicio:
         puntos = 0
@@ -49,10 +53,10 @@ while corriendo:
                 if boton_jugar.collidepoint(event.pos):
                     jugar=True
                     mostrar_inicio = False
-                    tablero = crear_matriz_buscaminas(16,30,10)
-                    estados = crear_diccionario_estados(16,30)
-                    banderas = crear_diccionario_banderas(16,30)
-                    matriz_completa = matriz_minas_contiguas(16,30, tablero)
+                    tablero = crear_matriz_buscaminas(filas_cantidad,columnas_cantidad,minas)
+                    estados = crear_diccionario_estados(filas_cantidad,columnas_cantidad,)
+                    banderas = crear_diccionario_banderas(filas_cantidad,columnas_cantidad,)
+                    matriz_completa = matriz_minas_contiguas(filas_cantidad,columnas_cantidad, tablero)
                     test_matriz(matriz_completa)
                     evento=event.pos
 
@@ -94,6 +98,7 @@ while corriendo:
 
 
     elif jugar == True:
+        
         pantalla.blit(imagen_fondo_juego, (0, 0))
         
         desplazamiento_x = (PANTALLA_ANCHO - len(matriz_completa[0]) * (40)) // 2
@@ -113,11 +118,12 @@ while corriendo:
             mostrar_puntos_tablero(pantalla, puntos, font_inicio, (75, 83, 32), (255,255,255), desplazamiento_x + 27, desplazamiento_y - 55, 100, 50)
             dibujar_boton_timer(pantalla, mi_texto, 150, 50, (PANTALLA_ANCHO-desplazamiento_x)-147.5, desplazamiento_y-55)
 
-        if verificar_victoria(matriz_completa, estados) and ganaste == False:
+        if verificar_victoria(matriz_completa, estados,minas) and ganaste == False:
             ganaste = True
             print("¡Ganaste!")
             limpiar_tablero(estados, matriz_completa, banderas)
             juego_terminado = True
+
 
         if juego_terminado:  
             nick = pedir_usuario(pantalla, font_inicio, imagen_fondo_puntajes)  # Pedir el nombre
@@ -147,7 +153,7 @@ while corriendo:
                 if boton_reiniciar.collidepoint(event.pos):
                     puntos = 0
                     contador_segundos=0
-                    tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado, ganaste = reiniciar_partida(tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado, ganaste)
+                    tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado, ganaste = reiniciar_partida(tablero, estados, banderas, matriz_completa, mensaje_perder_mostrado, ganaste,filas_cantidad,columnas_cantidad,minas)
 
                 if manejar_perdida(matriz_completa, estados, pos, desplazamiento_x, desplazamiento_y, banderas) and mensaje_perder_mostrado == False:
                     print("¡Hiciste clic en una mina! \n Fin del juego.")

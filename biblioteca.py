@@ -258,11 +258,11 @@ def dibujar_boton_reiniciar(pantalla:pygame.Surface, imagen_boton:pygame.Surface
     return boton_reiniciar
 
 
-def reiniciar_partida(tablero:list[list], estados:list[dict], banderas:list[dict], matriz_completa:list[list], mensaje_perder_mostrado:bool, ganaste:bool):
-    tablero = crear_matriz_buscaminas(8, 8, 10)
-    estados = crear_diccionario_estados(8, 8)
-    banderas = crear_diccionario_banderas(8, 8)
-    matriz_completa = matriz_minas_contiguas(8, 8, tablero)
+def reiniciar_partida(tablero:list[list], estados:list[dict], banderas:list[dict], matriz_completa:list[list], mensaje_perder_mostrado:bool, ganaste:bool,filas,columnas,minas):
+    tablero = crear_matriz_buscaminas(filas, columnas, minas)
+    estados = crear_diccionario_estados(filas, columnas)
+    banderas = crear_diccionario_banderas(filas, columnas)
+    matriz_completa = matriz_minas_contiguas(filas, columnas, tablero)
     mensaje_perder_mostrado = False
     ganaste = False
     print("Partida reiniciada.")
@@ -303,8 +303,9 @@ def dibujar_boton_sonido(sonido_mutado:bool, imagen_unmute:pygame.Surface, image
 
 
 
-def verificar_victoria(matriz:list[list], estados:list[dict]):
-    ganar = 54
+def verificar_victoria(matriz:list[list], estados:list[dict],cantidad):
+    ganar = len(matriz)*len(matriz[0])-cantidad
+    
     contador_espacios_descubiertos = 0
     victoria=False
 

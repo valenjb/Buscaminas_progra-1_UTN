@@ -7,9 +7,11 @@ import pygame
 # resolucion_pantalla = (pantalla_ancho, pantalla_alto)
 
 PANTALLA_ALTO = 760
-PANTALLA_ANCHO = 1360
+PANTALLA_ANCHO = 1000
 RESOLUCION_PANTALLA = (PANTALLA_ANCHO, PANTALLA_ALTO)
 
+inicio_ancho=600
+resolucion_inicio=(PANTALLA_ALTO,inicio_ancho)
 
 pantalla = pygame.display.set_mode(RESOLUCION_PANTALLA)
 color_fondo = [127, 157, 235]
