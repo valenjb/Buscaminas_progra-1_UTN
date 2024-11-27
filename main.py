@@ -50,9 +50,9 @@ while corriendo:
                     jugar=True
                     mostrar_inicio = False
                     tablero = crear_matriz_buscaminas(8,8,10)
-                    estados = crear_diccionario_estados(8,8)
-                    banderas = crear_diccionario_banderas(8,8)
-                    matriz_completa = matriz_minas_contiguas(8,8, tablero)
+                    estados = crear_diccionario_estados(16,30)
+                    banderas = crear_diccionario_banderas(16,30)
+                    matriz_completa = matriz_minas_contiguas(16,30, tablero)
                     test_matriz(matriz_completa)
                     evento=event.pos
 
@@ -92,16 +92,18 @@ while corriendo:
     elif jugar == True:
         pantalla.blit(imagen_fondo_juego, (0, 0))
         
-        desplazamiento_x = (PANTALLA_ANCHO - len(matriz_completa[0]) * (50)) // 2
-        desplazamiento_y = (PANTALLA_ALTO - len(matriz_completa) * (50)) // 2
+        desplazamiento_x = (PANTALLA_ANCHO - len(matriz_completa[0]) * (40)) // 2
+        desplazamiento_y = (PANTALLA_ALTO - len(matriz_completa) * (40)) // 2
+
+
 
         dibujar_fondo_tablero(pantalla, matriz_completa, COLOR_TABLERO)
         dibujar_boton_volver(pantalla, boton_volver, texto_boton_volver)
         crear_rectangulos(matriz_completa, estados, pantalla, desplazamiento_x, desplazamiento_y, margen=2)
         redibujar_bandera(banderas, desplazamiento_x, desplazamiento_y, evento)
         boton_reiniciar = dibujar_boton_reiniciar(pantalla,imagen_reiniciar, 263, 670)
-        mostrar_puntos_tablero(pantalla, puntos, font_inicio, (75, 83, 32), (255,255,255), desplazamiento_x + 27, desplazamiento_y - 75, 100, 50)
-        dibujar_boton_timer(pantalla, boton_timer, mi_texto)
+        mostrar_puntos_tablero(pantalla, puntos, font_inicio, (75, 83, 32), (255,255,255), desplazamiento_x + 27, desplazamiento_y - 55, 100, 50)
+        dibujar_boton_timer(pantalla, mi_texto, 150, 50,  desplazamiento_x + 150, desplazamiento_y - 55)
 
         if verificar_victoria(matriz_completa, estados) and ganaste == False:
             ganaste = True
