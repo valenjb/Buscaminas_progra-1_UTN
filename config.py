@@ -10,11 +10,11 @@ PANTALLA_ALTO = 760
 PANTALLA_ANCHO = 1360
 RESOLUCION_PANTALLA = (PANTALLA_ANCHO, PANTALLA_ALTO)
 
-inicio_alto=760
-inicio_ancho=600
-resolucion_inicio=(inicio_ancho,inicio_alto)
+INICIO_ALTO=760
+INICIO_ANCHO=600
+RESOLUCION_INICIO=(INICIO_ANCHO,INICIO_ALTO)
 pantalla = pygame.display.set_mode(RESOLUCION_PANTALLA)
-pantalla_inicio_2 = pygame.display.set_mode(resolucion_inicio)
+pantalla_inicio_2 = pygame.display.set_mode(RESOLUCION_INICIO)
 color_fondo = [127, 157, 235]
 posicion_personaje = [400, 300]
 
@@ -60,7 +60,7 @@ imagen_bandera = pygame.image.load("img/bandera.png")
 imagen_bandera = pygame.transform.scale(imagen_bandera, (40,40))
 
 imagen_fondo = pygame.image.load("img/fondo_menu.jpg")
-imagen_fondo = pygame.transform.scale(imagen_fondo, (RESOLUCION_PANTALLA))
+imagen_fondo = pygame.transform.scale(imagen_fondo, (RESOLUCION_INICIO))
 
 imagen_fondo_juego = pygame.image.load("img/fondo_juego.jpg")
 imagen_fondo_juego = pygame.transform.scale(imagen_fondo_juego, (RESOLUCION_PANTALLA))

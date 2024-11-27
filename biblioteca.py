@@ -5,16 +5,16 @@ from config import *
 
 #-----------------------------  PANTALLA  ------------------------------------------------------
 
-
 def cambiar_resolucion(resolucion):
     return pygame.display.set_mode(resolucion)
 
-def pantalla_inicio(sonido_mutado: bool, pantalla: pygame.Surface, font_inicio: pygame.font.Font,inicio_ancho:int ,inicio_alto:int):
+def pantalla_inicio(sonido_mutado: bool, pantalla: pygame.Surface, font_inicio: pygame.font.Font, ancho:tuple, alto:tuple):
+
     pantalla.blit(imagen_fondo, (0, 0))
     dibujar_boton_sonido(sonido_mutado, imagen_unmute, imagen_mute, boton_mute)
     # Crear texto con gradiente
-    texto_gradiente = texto_con_gradiente("BUSCAMINAS", font_inicio, (255, 0, 0), (0, 0, 0), inicio_ancho, inicio_alto)
-    pantalla.blit(texto_gradiente, (inicio_ancho / 2 - texto_gradiente.get_width() // 2, inicio_alto / 2 - 180))
+    texto_gradiente = texto_con_gradiente("BUSCAMINAS", font_inicio, (255, 0, 0), (0, 0, 0), ancho, alto)
+    pantalla.blit(texto_gradiente, (ancho / 2 - texto_gradiente.get_width() // 2, alto / 2 - 180))
 
     # Dibujar botones
     pygame.draw.rect(pantalla, (75, 83, 32), boton_nivel)
@@ -249,16 +249,17 @@ def mostrar_niveles(pantalla:pygame.Surface, imagen_fondo:pygame.Surface):
 
 
 
-def dibujar_boton_reiniciar(pantalla:pygame.Surface, imagen_boton:pygame.Surface, x:int, y:int,matriz:list[list]):
+def dibujar_boton_reiniciar(pantalla:pygame.Surface, font: pygame.font.Font, matriz:list[list], x:int, y:int, ancho:int, alto:int):
 
-    x_final=(x+len(matriz[0])*40/2)-40
-    y_final=(y+len(matriz)*40)+40
+    x_final=(x+len(matriz[0])*40/2) - (ancho // 2)
+    y_final=(y+len(matriz)*40) + 10
 
-    boton_reiniciar = pygame.Rect(x_final, y_final, imagen_boton.get_width(), imagen_boton.get_height())
-    pantalla.blit(imagen_reiniciar, (boton_reiniciar.x, boton_reiniciar.y))
-    pantalla.blit(texto_boton_reiniciar,(boton_reiniciar.x - 37, boton_reiniciar.y - 40))
-
-    return boton_reiniciar
+    boton = pygame.Rect(x_final, y_final, ancho, alto)
+    pygame.draw.rect(pantalla, (75, 83, 32), boton)
+    texto_boton_reiniciar=font.render("Reiniciar", True,(255,255,255))
+    pantalla.blit(texto_boton_reiniciar, texto_boton_reiniciar.get_rect(center=boton.center))
+    
+    return boton
 
 
 def reiniciar_partida(tablero:list[list], estados:list[dict], banderas:list[dict], matriz_completa:list[list], mensaje_perder_mostrado:bool, ganaste:bool,filas,columnas,minas):
@@ -489,7 +490,7 @@ def mostrar_mejores_puntajes(pantalla:pygame.Surface, font:pygame.font.Font, fon
         pygame.draw.rect(pantalla, (150, 150, 150), rect_puntaje)  
         pygame.draw.rect(pantalla, (150, 150, 150), rect_tiempo)  
 
-        texto_nombre = font.render(f"Nick: {nombre}", True, "white")
+        texto_nombre = font.render(f"{nombre}", True, "white")
         texto_puntaje = font.render(f"Puntaje: {puntaje}", True, "white")
         texto_tiempo = font.render(f"Tiempo: {tiempo}", True, "white")
         texto_titulo = font_2.render("Puntajes", True, "white")

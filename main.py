@@ -41,7 +41,7 @@ if PANTALLA_ANCHO==1000:
 while corriendo:
     if mostrar_inicio and jugar==False:
         puntos = 0
-        pantalla_inicio(sonido_mutado, pantalla_inicio_2, font_inicio,inicio_ancho,inicio_alto)
+        pantalla_inicio(sonido_mutado, pantalla_inicio_2, font_inicio, INICIO_ANCHO, INICIO_ALTO)
         for event in pygame.event.get():
             
             if event.type == pygame.QUIT:
@@ -112,7 +112,7 @@ while corriendo:
         dibujar_boton_volver(pantalla, boton_volver, texto_boton_volver)
         crear_rectangulos(matriz_completa, estados, pantalla, desplazamiento_x, desplazamiento_y, margen=2)
         redibujar_bandera(banderas, desplazamiento_x, desplazamiento_y, evento)
-        boton_reiniciar = dibujar_boton_reiniciar(pantalla,imagen_reiniciar, desplazamiento_x,desplazamiento_y,matriz_completa)
+        boton_reiniciar = dibujar_boton_reiniciar(pantalla, font_inicio, matriz_completa, desplazamiento_x, desplazamiento_y, 180, 40)
         if PANTALLA_ANCHO == 1360:
             mostrar_puntos_tablero(pantalla, puntos, font_inicio, (75, 83, 32), (255,255,255), desplazamiento_x + 200, desplazamiento_y - 55, 100, 50)
             dibujar_boton_timer(pantalla, mi_texto, 150, 50, (PANTALLA_ANCHO-desplazamiento_x)-300, desplazamiento_y-55)
@@ -151,7 +151,7 @@ while corriendo:
                     mensaje_perder_mostrado = False
                     ganaste = False
                     contador_segundos = 0
-                    cambiar_resolucion(resolucion_inicio)
+                    cambiar_resolucion(RESOLUCION_INICIO)
                 pos = event.pos
                 if boton_reiniciar.collidepoint(event.pos):
                     puntos = 0
