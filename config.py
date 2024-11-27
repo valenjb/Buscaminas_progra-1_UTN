@@ -6,12 +6,15 @@ import pygame
 # pantalla_ancho = 600
 # resolucion_pantalla = (pantalla_ancho, pantalla_alto)
 
-PANTALLA_ALTO =760
+PANTALLA_ALTO = 760
 PANTALLA_ANCHO = 600
 RESOLUCION_PANTALLA = (PANTALLA_ANCHO, PANTALLA_ALTO)
 
-
+INICIO_ALTO=760
+INICIO_ANCHO=600
+RESOLUCION_INICIO=(INICIO_ANCHO,INICIO_ALTO)
 pantalla = pygame.display.set_mode(RESOLUCION_PANTALLA)
+pantalla_inicio_2 = pygame.display.set_mode(RESOLUCION_INICIO)
 color_fondo = [127, 157, 235]
 posicion_personaje = [400, 300]
 
@@ -22,6 +25,12 @@ posicion_personaje = [400, 300]
 pygame.mixer.init()
 pygame.mixer.music.load("audio/cancion.mp3")
 
+sonido_click = pygame.mixer.Sound("audio/click_casillero.mp3")
+sonido_click.set_volume(1.0)  # Ajusta el volumen (opcional)
+sonido_bomba=pygame.mixer.Sound("audio/sonido_perder.mp3")
+sonido_bomba.set_volume(0.015)
+sonido_ganar=pygame.mixer.Sound("audio/sound_ganar.mp3")
+sonido_ganar.set_volume(0.3)
 
 #-----------------------------  COLORES  -------------------------------------------------
 
@@ -57,13 +66,16 @@ imagen_bandera = pygame.image.load("img/bandera.png")
 imagen_bandera = pygame.transform.scale(imagen_bandera, (40,40))
 
 imagen_fondo = pygame.image.load("img/fondo_menu.jpg")
-imagen_fondo = pygame.transform.scale(imagen_fondo, (RESOLUCION_PANTALLA))
+imagen_fondo = pygame.transform.scale(imagen_fondo, (RESOLUCION_INICIO))
 
 imagen_fondo_juego = pygame.image.load("img/fondo_juego.jpg")
 imagen_fondo_juego = pygame.transform.scale(imagen_fondo_juego, (RESOLUCION_PANTALLA))
 
 imagen_fondo_puntajes = pygame.image.load("img/fondo_puntajes.jpg")
-imagen_fondo_puntajes = pygame.transform.scale(imagen_fondo_puntajes, (RESOLUCION_PANTALLA))
+imagen_fondo_puntajes = pygame.transform.scale(imagen_fondo_puntajes, (RESOLUCION_INICIO))
+
+imagen_fondo_puntajes_final = pygame.image.load("img/fondo_puntajes.jpg")
+imagen_fondo_puntajes_final = pygame.transform.scale(imagen_fondo_puntajes, (RESOLUCION_PANTALLA))
 
 imagen_reiniciar = pygame.image.load("img/boton_reinicio.png")
 imagen_reiniciar = pygame.transform.scale(imagen_reiniciar, (75, 75))
