@@ -526,6 +526,17 @@ def dibujar_boton_sonido(sonido_mutado:bool, imagen_unmute:pygame.Surface, image
 
 
 def verificar_victoria(matriz:list[list], estados:list[dict],cantidad):
+    """
+    Verifica si el jugador ha descubierto todas las casillas necesarias para ganar.
+
+    Recibe:
+    matriz: matriz del tablero de buscaminas.
+    estados: estados de las casillas.
+    cantidad: número de minas en el tablero.
+
+    Retorna:
+    True si se gana; False en caso contrario.
+    """
     ganar = len(matriz)*len(matriz[0])-cantidad
     
     contador_espacios_descubiertos = 0

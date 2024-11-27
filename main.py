@@ -44,7 +44,7 @@ if PANTALLA_ANCHO==1360:
     filas_cantidad=16
     columnas_cantidad=32
 while corriendo:
-    if mostrar_inicio and jugar==False:
+    if mostrar_inicio:
         puntos = 0
         pantalla_inicio(sonido_mutado, pantalla_inicio_2, font_inicio, INICIO_ANCHO, INICIO_ALTO)
         for event in pygame.event.get():

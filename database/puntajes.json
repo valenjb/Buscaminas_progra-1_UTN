@@ -30,14 +30,14 @@
         "Tiempo": 1
     },
     {
-        "nombre": "AGUSTIN",
-        "puntaje": 511,
-        "Tiempo": 3
-    },
-    {
         "nombre": "agustin",
         "puntaje": 511,
         "Tiempo": 1
+    },
+    {
+        "nombre": "AGUSTIN",
+        "puntaje": 255,
+        "Tiempo": 0
     },
     {
         "nombre": "agus l",
@@ -58,5 +58,10 @@
         "nombre": "valen J",
         "puntaje": 54,
         "Tiempo": 19
+    },
+    {
+        "nombre": "AGASDAS",
+        "puntaje": 255,
+        "Tiempo": 1
     }
 ]

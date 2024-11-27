@@ -7,7 +7,7 @@ import pygame
 # resolucion_pantalla = (pantalla_ancho, pantalla_alto)
 
 PANTALLA_ALTO = 760
-PANTALLA_ANCHO = 1360
+PANTALLA_ANCHO = 1000
 RESOLUCION_PANTALLA = (PANTALLA_ANCHO, PANTALLA_ALTO)
 
 INICIO_ALTO=760
