@@ -447,7 +447,7 @@ def acomodar_jugadores(archivo_puntajes:json):
     except (FileNotFoundError, json.JSONDecodeError):
         puntajes = []
 
-    puntajes.sort(key=lambda dic: (-dic["Tiempo"], dic["puntaje"]))
+    puntajes.sort(key=lambda dic: dic["puntaje"],reverse=True)
 
     with open(archivo_puntajes, "w") as archivo:
         json.dump(puntajes, archivo, indent=4)
@@ -464,11 +464,11 @@ def mostrar_mejores_puntajes(pantalla:pygame.Surface, font:pygame.font.Font, fon
         puntaje = puntajes[i]["puntaje"]
         tiempo = puntajes[i]["Tiempo"]
 
-        if i == 0:
+        if i == 1:
             x_pos = pantalla.get_width() - ancho - x
-        elif i == 1:
-            x_pos = x
         elif i == 2:
+            x_pos = x
+        elif i == 0:
             x_pos = pantalla.get_width() // 2 - ancho // 2
 
         nombre_y = y
