@@ -81,6 +81,8 @@ while corriendo:
     elif mostrar_puntaje == True:
         mostrar_puntajes(pantalla,imagen_fondo_puntajes)
         dibujar_boton_volver(pantalla, boton_volver, texto_boton_volver)
+        puntajes_ordenados = acomodar_jugadores("database/puntajes.json")
+        mostrar_mejores_puntajes(pantalla, font_puntajes, font_timer, puntajes_ordenados, 50, 350, 150, 50, 15)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 corriendo = False
@@ -88,6 +90,8 @@ while corriendo:
                 if boton_volver.collidepoint(event.pos):
                     mostrar_inicio = True
                     mostrar_puntaje = False
+                    
+
 
     elif jugar == True:
         pantalla.blit(imagen_fondo_juego, (0, 0))
@@ -101,7 +105,6 @@ while corriendo:
         dibujar_boton_volver(pantalla, boton_volver, texto_boton_volver)
         crear_rectangulos(matriz_completa, estados, pantalla, desplazamiento_x, desplazamiento_y, margen=2)
         redibujar_bandera(banderas, desplazamiento_x, desplazamiento_y, evento)
-        
         boton_reiniciar = dibujar_boton_reiniciar(pantalla,imagen_reiniciar, desplazamiento_x,desplazamiento_y,matriz_completa)
         if PANTALLA_ANCHO == 1360:
             mostrar_puntos_tablero(pantalla, puntos, font_inicio, (75, 83, 32), (255,255,255), desplazamiento_x + 200, desplazamiento_y - 55, 100, 50)
@@ -118,7 +121,7 @@ while corriendo:
 
         if juego_terminado:  
             nick = pedir_usuario(pantalla, font_inicio, imagen_fondo_puntajes)  # Pedir el nombre
-            guardar_puntaje(nick, puntos)  
+            guardar_puntaje(nick, puntos, contador_segundos)  
             mostrar_inicio = True 
             jugar = False
             ganaste = False
@@ -127,7 +130,7 @@ while corriendo:
 
 
         for event in pygame.event.get():
-            if event.type == mi_evento and not mensaje_perder_mostrado:
+            if event.type == mi_evento and mensaje_perder_mostrado == False:
                 minutos, segundos = contador_reloj(contador_segundos)
                 mi_texto = font_timer.render(f"{minutos:02}:{segundos:02}", True, "white")
                 contador_segundos += 1

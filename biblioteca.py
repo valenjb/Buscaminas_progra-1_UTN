@@ -253,9 +253,11 @@ def mostrar_niveles(pantalla:pygame.Surface, imagen_fondo:pygame.Surface):
 
 
 
-def dibujar_boton_reiniciar(pantalla:pygame.Surface, imagen_boton:pygame.Surface, x:int, y:int,matriz_completa):
-    x_final=(x+len(matriz_completa[0])*40/2)-40
-    y_final=(y+len(matriz_completa)*40)+40
+def dibujar_boton_reiniciar(pantalla:pygame.Surface, imagen_boton:pygame.Surface, x:int, y:int,matriz:list[list]):
+
+    x_final=(x+len(matriz[0])*40/2)-40
+    y_final=(y+len(matriz)*40)+40
+
     boton_reiniciar = pygame.Rect(x_final, y_final, imagen_boton.get_width(), imagen_boton.get_height())
     pantalla.blit(imagen_reiniciar, (boton_reiniciar.x, boton_reiniciar.y))
     pantalla.blit(texto_boton_reiniciar,(boton_reiniciar.x - 37, boton_reiniciar.y - 40))
@@ -397,7 +399,7 @@ def pedir_usuario(pantalla:pygame.Surface, font:pygame.Surface, imagen_fondo:pyg
     return nombre
 
 
-def guardar_puntaje(nombre:str, puntos:int):
+def guardar_puntaje(nombre:str, puntos:int, contador:int):
     archivo_puntajes = "database/puntajes.json"
 
     try:
@@ -410,11 +412,12 @@ def guardar_puntaje(nombre:str, puntos:int):
     for registro in puntajes:
         if registro["nombre"] == nombre:        #FALTA ARREGLAR SI ES MENOR EL PUNTAJE 
             registro["puntaje"] = puntos
+            registro["Tiempo"] = contador
             nombre_existente = True
             break
 
     if nombre_existente == False:
-        puntajes.append({"nombre": nombre, "puntaje": puntos})
+        puntajes.append({"nombre": nombre, "puntaje": puntos, "Tiempo": contador})
 
     with open(archivo_puntajes, "w") as archivo:
         json.dump(puntajes, archivo, indent=4)
@@ -435,16 +438,66 @@ def mostrar_puntos_tablero(pantalla:pygame.Surface, puntos, fuente:pygame.font.F
 def dibujar_boton_timer(pantalla:pygame.Surface, texto_boton_timer:pygame.Surface, ancho:int, alto:int, x:int, y:int):
     boton_timer = pygame.Rect(x,y, ancho, alto)
     pygame.draw.rect(pantalla, (75, 83, 32), boton_timer)
-    texto_re = texto_boton_timer.get_rect(center = boton_timer.center)
-    pantalla.blit(texto_boton_timer,texto_re)
+    texto_rect = texto_boton_timer.get_rect(center = boton_timer.center)
+    pantalla.blit(texto_boton_timer, texto_rect)
     
     
 
 
-# def resolucion_juego(resolucion_pantalla, dificultad):
-#     if dificultad == "facil":
-#         resolucion_pantalla= (600,760)
-#     elif dificultad== "medio":
-#         resolucion_pantalla= (600,760)
-#     else:
-#         resolucion_pantalla= (1360,760)
+def acomodar_jugadores(archivo_puntajes:json):
+
+
+    try:
+        with open(archivo_puntajes, "r") as archivo:
+            puntajes = json.load(archivo)
+    except (FileNotFoundError, json.JSONDecodeError):
+        puntajes = []
+
+    puntajes.sort(key=lambda dic: (-dic["Tiempo"], dic["puntaje"]))
+
+    with open(archivo_puntajes, "w") as archivo:
+        json.dump(puntajes, archivo, indent=4)
+
+    return puntajes
+
+
+def mostrar_mejores_puntajes(pantalla:pygame.Surface, font:pygame.font.Font, font_2:pygame.font.Font, puntajes:json, x:int, y:int, ancho:int, alto:int, espacio:int):
+
+
+    for i in range(0,3):
+
+        nombre = puntajes[i]["nombre"]
+        puntaje = puntajes[i]["puntaje"]
+        tiempo = puntajes[i]["Tiempo"]
+
+        if i == 0:
+            x_pos = pantalla.get_width() - ancho - x
+        elif i == 1:
+            x_pos = x
+        elif i == 2:
+            x_pos = pantalla.get_width() // 2 - ancho // 2
+
+        nombre_y = y
+        puntaje_y = nombre_y + alto + espacio
+        tiempo_y = puntaje_y + alto + espacio
+
+        rect_nombre = pygame.Rect(x_pos, nombre_y, ancho, alto) 
+        rect_puntaje = pygame.Rect(x_pos, puntaje_y, ancho, alto) 
+        rect_tiempo = pygame.Rect(x_pos, tiempo_y, ancho, alto)
+        rect_titulo = pygame.Rect(300,250, 0, 0)
+
+
+        pygame.draw.rect(pantalla, (0,0,0), rect_titulo)
+        pygame.draw.rect(pantalla, (150, 150, 150), rect_nombre)  
+        pygame.draw.rect(pantalla, (150, 150, 150), rect_puntaje)  
+        pygame.draw.rect(pantalla, (150, 150, 150), rect_tiempo)  
+
+        texto_nombre = font.render(f"Nick: {nombre}", True, "white")
+        texto_puntaje = font.render(f"Puntaje: {puntaje}", True, "white")
+        texto_tiempo = font.render(f"Tiempo: {tiempo}", True, "white")
+        texto_titulo = font_2.render("Puntajes", True, "white")
+
+        pantalla.blit(texto_nombre, texto_nombre.get_rect(center=rect_nombre.center))
+        pantalla.blit(texto_puntaje, texto_puntaje.get_rect(center=rect_puntaje.center))
+        pantalla.blit(texto_tiempo, texto_tiempo.get_rect(center=rect_tiempo.center))
+        pantalla.blit(texto_titulo, texto_titulo.get_rect(center=rect_titulo.center))
